@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="ShowMeTheXAML.MSBuild.BuildXamlDictionaryTask"
+             AssemblyFile="bin\Debug\net47\ShowMeTheXAML.MSBuild.dll"/>
+
+  <Target Name="BuildXamlDictionary" BeforeTargets="MarkupCompilePass1">
+    <Message Text="Kevin Page: '@(Page)'" />
+    <BuildXamlDictionaryTask 
+      PageMarkup="@(Page)"
+      OutputPath="$(IntermediateOutputPath)">
+      
+      <Output ItemName="Compile" TaskParameter="GeneratedCodeFiles" />
+    </BuildXamlDictionaryTask>
+  </Target>
+</Project>
