@@ -5,9 +5,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Remove="ShowMeTheXAML.targets" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
