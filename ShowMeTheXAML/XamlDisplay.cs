@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ShowMeTheXAML
@@ -8,6 +11,28 @@ namespace ShowMeTheXAML
         static XamlDisplay()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));
+        }
+
+        public static void Init(params Assembly[] assemblies)
+        {
+            if (assemblies?.Any() == true)
+            {
+                foreach (Assembly assembly in assemblies)
+                {
+                    LoadFromAssembly(assembly);
+                }
+            }
+            LoadFromAssembly(Assembly.GetEntryAssembly());
+
+            void LoadFromAssembly(Assembly assembly)
+            {
+                Type xamlDictionary = assembly.GetType("ShowMeTheXAML.XamlDictionary");
+                if (xamlDictionary != null)
+                {
+                    //Invoke the static constructor
+                    xamlDictionary.TypeInitializer.Invoke(null, null);
+                }
+            }
         }
 
         public static readonly DependencyProperty KeyProperty = DependencyProperty.Register(

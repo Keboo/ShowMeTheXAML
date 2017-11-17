@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net47</TargetFramework>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="ShowMeTheXAML.targets" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />
