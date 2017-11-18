@@ -264,3 +264,4 @@ __pycache__/
 /Nuget/ShowMeTheXAML.AvalonEdit/lib/net45
 /Nuget/ShowMeTheXAML.MSBuild/build/netstandard1.0
 /Nuget/ShowMeTheXAML.MSBuild/ShowMeTheXAML.MSBuild.dll
+/Nuget/ShowMeTheXAML.MSBuild/build/net45

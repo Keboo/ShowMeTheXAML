@@ -13,12 +13,12 @@
 
   <Target Name="CopyTargetsFile" AfterTargets="AfterBuild">
     <ItemGroup>
-      <BuildItems Include="$(ProjectDir)ShowMeTheXAML.targets" />
+      <BuildItems Include="$(ProjectDir)ShowMeTheXAML.MSBuild.targets" />
       <CopyItems Include="$(TargetDir)$(TargetFileName)" />
       <CopyItems Include="$(TargetDir)$(TargetName).pdb" />
     </ItemGroup>
     
     <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\%(CopyItems.RecursiveDir)" />
-    <Copy SourceFiles="@(BuildItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\build\netstandard1.0\%(BuildItems.RecursiveDir)" />
+    <Copy SourceFiles="@(BuildItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\build\net45\%(BuildItems.RecursiveDir)" />
   </Target>
 </Project>

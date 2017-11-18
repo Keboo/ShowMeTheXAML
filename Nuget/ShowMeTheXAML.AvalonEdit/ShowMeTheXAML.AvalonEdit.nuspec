@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>ShowMeTheXAML.AvalonEdit</id>
-    <version>0.0.0</version>
+    <version>1.0.2</version>
     <title>ShowMeTheXAML.AvalonEdit</title>
     <authors>Keboo</authors>
     <owners>Keboo</owners>
@@ -13,7 +13,8 @@
     <copyright>Copyright 2017</copyright>
     <tags>ShowMeTheXAML,XAML,AvelonEdit</tags>
     <dependencies>
-      <dependency id="ShowMeTheXAML" version="[0.0.0,0.1.0)" />
+      <dependency id="ShowMeTheXAML" version="[1.0.2,1.1.0)" />
+      <dependency id="AvalonEdit" version="[5.0.4,5.1.0)" />
     </dependencies>
   </metadata>
 </package>

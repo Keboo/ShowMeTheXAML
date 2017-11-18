@@ -6,14 +6,16 @@
         xmlns:showMeTheXaml="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <StackPanel>
+    <StackPanel Margin="10">
+        
         <showMeTheXaml:XamlDisplay Key="Button" VerticalAlignment="Center">
             <Button Content="Some Button" />
         </showMeTheXaml:XamlDisplay>
-<showMeTheXaml:XamlDisplay VerticalAlignment="Center" Key="Grid">
-    <Grid>
-        <TextBlock Text="My Text" />
-    </Grid>
-</showMeTheXaml:XamlDisplay>
+        
+        <showMeTheXaml:XamlDisplay VerticalAlignment="Center" Key="Grid">
+            <Grid>
+                <TextBlock Text="My Text" />
+            </Grid>
+        </showMeTheXaml:XamlDisplay>
     </StackPanel>
 </Window>
