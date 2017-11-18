@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>ShowMeTheXAML</id>
+    <version>0.0.0</version>
+    <title>ShowMeTheXAML</title>
+    <authors>Keboo</authors>
+    <owners>Keboo</owners>
+    <licenseUrl>https://github.com/Keboo/ShowMeTheXAML/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Keboo/ShowMeTheXAML</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Base classes for ShowMeTheXAML. This contains the basic control. If you are wanting to add this to your own project use ShowMeTheXAML.MSBuild.</description>
+    <copyright>Copyright 2017</copyright>
+    <tags>ShowMeTheXAML,XAML</tags>
+  </metadata>
+</package>

@@ -1,14 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
     <TargetFramework>net47</TargetFramework>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
-   </ItemGroup>
+  </ItemGroup>
 
+  <Target Name="CopyTargetsFile" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <BuildItems Include="$(ProjectDir)ShowMeTheXAML.targets" />
+      <CopyItems Include="$(TargetDir)$(TargetFileName)" />
+      <CopyItems Include="$(TargetDir)$(TargetName).pdb" />
+    </ItemGroup>
+    
+    <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\%(CopyItems.RecursiveDir)" />
+    <Copy SourceFiles="@(BuildItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\build\netstandard1.0\%(BuildItems.RecursiveDir)" />
+  </Target>
 </Project>

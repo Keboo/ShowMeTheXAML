@@ -1,0 +1,88 @@
+# configuration for master/CI branch
+-
+  environment:
+    smtx_version: 1.0.0
+    APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
+  branches:
+    only:
+    - master
+  image: Visual Studio 2017
+  configuration: Release
+  platform: Any CPU
+  init:
+  - ps: >-
+      Update-AppveyorBuild -Version "$env:smtx_version-ci$env:appveyor_build_number"
+    
+      Set-AppveyorBuildVariable -Name "smtx_version_full" -Value "$env:smtx_version.$env:appveyor_build_number"
+  assembly_info:
+    patch: false
+  nuget:
+    account_feed: false
+    project_feed: true
+    disable_publish_on_pr: true
+  #Temp work around for issues with nuget server.
+  #hosts:
+  #  api.nuget.org: 93.184.221.200
+  before_build:
+  - ps: nuget restore
+  build:
+    project: ShowMeTheXAML.sln
+    verbosity: minimal
+  after_build:
+  - ps: >-
+      .\Nuget\UpdateNuspecFiles.ps1 -Version "$env:smtx_version-ci$env:appveyor_build_number"
+    
+      nuget pack Nuget\AutoDI\AutoDI.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+    
+      nuget pack Nuget\AutoDI.Fody\AutoDI.Fody.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+    
+      nuget pack Nuget\AutoDI.AspNetCore\AutoDI.AspNetCore.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+  artifacts:
+  - path: '*.nupkg'
+    name: NuGets
+  deploy:
+  - provider: Environment
+    name: NuGet publish
+
+#Configuration for releases
+-
+  environment:
+    smtx_version: 1.0.0
+    APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
+  branches:
+    only:
+    - release
+  image: Visual Studio 2017
+  configuration: Release
+  platform: Any CPU
+  init:
+  - ps: >-
+      Update-AppveyorBuild -Version "$env:smtx_version"
+    
+      Set-AppveyorBuildVariable -Name "smtx_version_full" -Value "$env:smtx_version"
+  assembly_info:
+    patch: false
+  nuget:
+    account_feed: false
+    project_feed: true
+    disable_publish_on_pr: true
+  before_build:
+  - ps: nuget restore
+  build:
+    project: ShowMeTheXAML.sln
+    verbosity: minimal
+  after_build:
+  - ps: >-
+      .\Nuget\UpdateNuspecFiles.ps1 -Version "$env:smtx_version"
+    
+      nuget pack Nuget\AutoDI\AutoDI.nuspec -Version "$env:smtx_version" -Symbols
+    
+      nuget pack Nuget\AutoDI.Fody\AutoDI.Fody.nuspec -Version "$env:smtx_version"  -Symbols
+    
+      nuget pack Nuget\AutoDI.AspNetCore\AutoDI.AspNetCore.nuspec -Version "$env:smtx_version"  -Symbols
+  artifacts:
+  - path: '*.nupkg'
+    name: NuGets
+  deploy:
+  - provider: Environment
+    name: NuGet publish

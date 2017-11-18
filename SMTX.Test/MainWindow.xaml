@@ -10,10 +10,10 @@
         <showMeTheXaml:XamlDisplay Key="Button" VerticalAlignment="Center">
             <Button Content="Some Button" />
         </showMeTheXaml:XamlDisplay>
-        <showMeTheXaml:XamlDisplay VerticalAlignment="Center" Key="Grid">
-            <Grid>
-                <TextBlock Text="My Text" />
-            </Grid>
-        </showMeTheXaml:XamlDisplay>
+<showMeTheXaml:XamlDisplay VerticalAlignment="Center" Key="Grid">
+    <Grid>
+        <TextBlock Text="My Text" />
+    </Grid>
+</showMeTheXaml:XamlDisplay>
     </StackPanel>
 </Window>

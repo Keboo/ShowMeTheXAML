@@ -259,3 +259,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+*.exe
+/Nuget/ShowMeTheXAML/lib/net45
+/Nuget/ShowMeTheXAML.AvalonEdit/lib/net45
+/Nuget/ShowMeTheXAML.MSBuild/build/netstandard1.0
+/Nuget/ShowMeTheXAML.MSBuild/ShowMeTheXAML.MSBuild.dll

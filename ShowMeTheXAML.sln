@@ -9,9 +9,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML.MSBuild", "Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeTheXAML.AvalonEdit", "ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.csproj", "{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{05F8C35B-3EED-4202-9447-8693F2D513AD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD51D6C3-ECB2-410F-99BD-5BE217708A8D}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		Build.targets = Build.targets
+		BuildLocalNugets.ps1 = BuildLocalNugets.ps1
+		Nuget\UpdateNuspecFiles.ps1 = Nuget\UpdateNuspecFiles.ps1
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTX.Test", "SMTX.Test\SMTX.Test.csproj", "{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{FB3D7B74-8B15-49E4-8712-0A43D3DEFA12}"
+	ProjectSection(SolutionItems) = preProject
+		Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec = Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec
+		Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec = Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec
+		Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec = Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,16 +42,12 @@ Global
 		{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF} = {05F8C35B-3EED-4202-9447-8693F2D513AD}
+		{FB3D7B74-8B15-49E4-8712-0A43D3DEFA12} = {DD51D6C3-ECB2-410F-99BD-5BE217708A8D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3FA949CD-4833-4A14-8AE1-857568CD8CE4}
