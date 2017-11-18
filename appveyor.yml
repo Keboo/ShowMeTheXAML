@@ -32,17 +32,17 @@
   - ps: >-
       .\Nuget\UpdateNuspecFiles.ps1 -Version "$env:smtx_version-ci$env:appveyor_build_number"
     
-      nuget pack Nuget\AutoDI\AutoDI.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+      nuget pack Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
-      nuget pack Nuget\AutoDI.Fody\AutoDI.Fody.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+      nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
-      nuget pack Nuget\AutoDI.AspNetCore\AutoDI.AspNetCore.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+      nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
   artifacts:
   - path: '*.nupkg'
     name: NuGets
-  deploy:
-  - provider: Environment
-    name: NuGet publish
+  #deploy:
+  #- provider: Environment
+  #  name: NuGet publish
 
 #Configuration for releases
 -
@@ -75,14 +75,14 @@
   - ps: >-
       .\Nuget\UpdateNuspecFiles.ps1 -Version "$env:smtx_version"
     
-      nuget pack Nuget\AutoDI\AutoDI.nuspec -Version "$env:smtx_version" -Symbols
+      nuget pack Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
-      nuget pack Nuget\AutoDI.Fody\AutoDI.Fody.nuspec -Version "$env:smtx_version"  -Symbols
+      nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
-      nuget pack Nuget\AutoDI.AspNetCore\AutoDI.AspNetCore.nuspec -Version "$env:smtx_version"  -Symbols
+      nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
   artifacts:
   - path: '*.nupkg'
     name: NuGets
-  deploy:
-  - provider: Environment
-    name: NuGet publish
+  #deploy:
+  #- provider: Environment
+  #  name: NuGet publish

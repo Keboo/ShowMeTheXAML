@@ -3,7 +3,7 @@
 Param([Parameter(Mandatory=$true)][string]$Version,
 [Parameter()][System.IO.DirectoryInfo]$TargetDir)
 
-msbuild "ShowMeTheXAML.sln" /p:AUTODI_VERSION_FULL=$Version /p:Configuration=Debug
+msbuild "ShowMeTheXAML.sln" /p:SMTX_VERSION_FULL=$Version /p:Configuration=Debug
 
 if (!(Test-Path "nuget.exe")) {
     Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile "nuget.exe"
