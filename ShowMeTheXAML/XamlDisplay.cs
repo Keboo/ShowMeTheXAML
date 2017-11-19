@@ -42,7 +42,7 @@ namespace ShowMeTheXAML
         {
             if (d is XamlDisplay xamlDisplay)
             {
-                xamlDisplay.SetCurrentValue(XamlProperty, XamlResolver.Resolve((string)e.NewValue));
+                xamlDisplay.ReloadXaml();
             }
         }
 
@@ -53,12 +53,54 @@ namespace ShowMeTheXAML
         }
 
         public static readonly DependencyProperty XamlProperty = DependencyProperty.Register(
-            nameof(Xaml), typeof(string), typeof(XamlDisplay), new PropertyMetadata(default(string)));
+            nameof(Xaml), typeof(string), typeof(XamlDisplay), new PropertyMetadata(default(string), OnXamlChanged));
+
+        private static void OnXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is XamlDisplay xamlDisplay)
+            {
+                xamlDisplay.ReloadXaml();
+            }
+        }
 
         public string Xaml
         {
             get => (string) GetValue(XamlProperty);
             set => SetValue(XamlProperty, value);
+        }
+
+        public static readonly DependencyProperty FormatterProperty = DependencyProperty.Register(
+            nameof(Formatter), typeof(IXamlFormatter), typeof(XamlDisplay), 
+            new PropertyMetadata(default(IXamlFormatter), OnXamlConverterChanged));
+
+        private static void OnXamlConverterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is XamlDisplay xamlDisplay)
+            {
+                xamlDisplay.ReloadXaml();
+            }
+        }
+
+        public IXamlFormatter Formatter
+        {
+            get => (IXamlFormatter) GetValue(FormatterProperty);
+            set => SetValue(FormatterProperty, value);
+        }
+
+        private bool _isLoading;
+        private void ReloadXaml()
+        {
+            if (_isLoading) return;
+            string key = Key;
+            string xaml = XamlResolver.Resolve(key);
+            IXamlFormatter formatter = Formatter;
+            if (formatter != null)
+            {
+                xaml = formatter.FormatXaml(xaml);
+            }
+            _isLoading = true;
+            SetCurrentValue(XamlProperty, xaml);
+            _isLoading = false;
         }
     }
 }

@@ -49,6 +49,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IndentedXamlFormatter.cs" />
+    <Compile Include="IXamlFormatter.cs" />
     <Compile Include="XamlResolveEventArgs.cs" />
     <Compile Include="XamlResolver.cs" />
     <Page Include="Themes\Generic.xaml">

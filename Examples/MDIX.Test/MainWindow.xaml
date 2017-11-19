@@ -1,0 +1,43 @@
+﻿<Window x:Class="MDIX.Test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:showMeTheXaml="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel>
+        <showMeTheXaml:XamlDisplay Key="11AE7862-7464-40BA-BFE9-3A97787D5773">
+            <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100"
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
+                _LIGHT
+            </Button>
+        </showMeTheXaml:XamlDisplay>
+        <showMeTheXaml:XamlDisplay Key="97C1BB1A-C358-48FB-B157-6ABA65AED59B">
+            <Button Style="{StaticResource MaterialDesignRaisedButton}" Width="100"
+                ToolTip="Resource name: MaterialDesignRaisedButton">
+                _MID
+            </Button>
+        </showMeTheXaml:XamlDisplay>
+        <showMeTheXaml:XamlDisplay Key="EF5F7A19-8014-4BEB-98B0-4D89898FFA4B">
+            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="100"
+                    ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
+                _DARK
+            </Button>
+        </showMeTheXaml:XamlDisplay>
+
+        <showMeTheXaml:XamlDisplay Key="8AEB79D5-E250-4CBB-BF74-0AC3DFD8485A">
+            <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="100"
+                    ToolTip="Resource name: MaterialDesignRaisedAccentButton">
+                ACCENT
+            </Button>
+        </showMeTheXaml:XamlDisplay>
+    </StackPanel>
+</Window>
