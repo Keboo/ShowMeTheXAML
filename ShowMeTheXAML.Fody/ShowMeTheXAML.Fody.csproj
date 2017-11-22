@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <SignAssembly>True</SignAssembly>
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <Version Condition="'$(SMTX_VERSION_FULL)' != ''">$(SMTX_VERSION_FULL)</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FodyCecil" Version="2.2.0" />
+    <PackageReference Include="gitlink" Version="3.1.0" />
+  </ItemGroup>
+
+  <Target Name="CopyOutput" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <CopyItems Include="$(TargetDir)ShowMeTheXAML*.dll" />
+      <CopyItems Include="$(TargetDir)ShowMeTheXAML*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)\NuGet\$(ProjectName)" />
+  </Target>
+</Project>
