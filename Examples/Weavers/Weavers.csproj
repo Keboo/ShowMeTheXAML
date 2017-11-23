@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BamlParser" Version="1.0.0" />
+    <PackageReference Include="FodyCecil" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\ShowMeTheXAML.Fody\ModuleWeaver.cs" Link="ModuleWeaver.cs" />
+  </ItemGroup>
+
+</Project>

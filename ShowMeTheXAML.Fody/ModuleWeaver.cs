@@ -2,8 +2,13 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Resources;
 using System.Xml.Linq;
+using Confuser.Renamer.BAML;
 
 // ReSharper disable once CheckNamespace
 public partial class ModuleWeaver
@@ -66,7 +71,95 @@ public partial class ModuleWeaver
 
     public void Execute()
     {
+        foreach (var resource in ModuleDefinition.Resources.OfType<EmbeddedResource>().ToList())
+        {
+            Stream stream = resource.GetResourceStream();
+            LogWarning($"Found resource {resource.Name} - {stream != null}");
+            if (stream != null)
+            {
+                using (var ms = new MemoryStream())
+                using (ResourceWriter writer = new ResourceWriter(ms))
+                using (ResourceReader rr = new ResourceReader(stream))
+                {
+                    bool replace = false;
+                    foreach (DictionaryEntry entry in rr)
+                    {
+                        if (entry.Value is Stream rrStream)
+                        {
+                            replace = true;
+                            var document = BamlReader.ReadDocument(rrStream);
 
+                            Stack<BamlRecord> elementStack = new Stack<BamlRecord>();
+                            ushort? displayerTypeId = null;
+                            int i = 0;
+                            bool inDisplayer = false;
+                            foreach (BamlRecord item in document)
+                            {
+                                string extra = "";
+                                if (item.Type == BamlRecordType.LineNumberAndPosition &&
+                                    item is LineNumberAndPositionRecord lpRecord)
+                                {
+                                    extra = $"{lpRecord.LineNumber}, {lpRecord.LinePosition}";
+                                }
+                                else if (item.Type == BamlRecordType.TypeInfo && item is TypeInfoRecord typeRecord)
+                                {
+                                    extra = $"{typeRecord.TypeFullName} TypeId {typeRecord.TypeId}";
+                                    if (typeRecord.TypeFullName == "ShowMeTheXAML.XamlDisplay")
+                                    {
+                                        displayerTypeId = typeRecord.TypeId;
+                                    }
+                                }
+                                else if (item.Type == BamlRecordType.ElementStart &&
+                                         item is ElementStartRecord startRecord)
+                                {
+                                    extra = $" TypeId {startRecord.TypeId}";
+                                    if (startRecord.TypeId == displayerTypeId)
+                                    {
+                                        elementStack.Push(item);
+                                        LogWarning("~~Found XamlDisplayer~~");
+                                    }
+                                }
+                                else if (item.Type == BamlRecordType.AttributeInfo &&
+                                         item is AttributeInfoRecord attribRecord)
+                                {
+                                    extra = $"Name: {attribRecord.Name} Id: {attribRecord.AttributeId} OwnerTypeId {attribRecord.OwnerTypeId} Usage {attribRecord.AttributeUsage}";
+                                }
+                                else if (item.Type == BamlRecordType.ElementEnd && item is ElementEndRecord endRecord)
+                                {
+                                    if (elementStack.Count > 0)
+                                    {
+                                        elementStack.Pop();
+                                        if (elementStack.Count == 0)
+                                        {
+                                            LogWarning("~~Leaving XamlDisplayer~~");
+                                        }
+                                    }
+                                }
+                                else if (item.Type == BamlRecordType.PropertyWithConverter && item is PropertyRecord pwcRecord)
+                                {
+                                    extra = $"AttribId: {pwcRecord.AttributeId} Value: {pwcRecord.Value}";
+                                }
+                                LogWarning($"{i++} {item.Type} {extra}");
+                            }
+                            var outStream = new MemoryStream();
+                            BamlWriter.WriteDocument(document, outStream);
+                            outStream.Position = 0;
+                            LogWarning($"Got entry {entry.Key} with stream {outStream.Length}");
+
+                            writer.AddResource("2" + (string)entry.Key, outStream);
+                        }
+                    }
+                    writer.Generate();
+                    if (replace)
+                    {
+                        ms.Position = 0;
+                        LogWarning($"Write {ms.Length} bytes");
+                        ModuleDefinition.Resources.Add(new EmbeddedResource("ShowMeTheXAML2.g.resources", resource.Attributes,
+                            ms.ToArray()));
+                    }
+                }
+            }
+        }
     }
 
     // Will be called when a request to cancel the build occurs. OPTIONAL

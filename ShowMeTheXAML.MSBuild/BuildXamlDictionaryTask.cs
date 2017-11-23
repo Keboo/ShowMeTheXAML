@@ -35,6 +35,8 @@ namespace ShowMeTheXAML.MSBuild
         [Required]
         public string OutputPath { get; set; }
 
+        public bool RequireKeySet { get; set; } = true;
+
         private bool _success;
         public override bool Execute()
         {
@@ -85,7 +87,10 @@ namespace ShowMeTheXAML.MSBuild
                             DisplayerLocation location = new DisplayerLocation(fullPath, displayer);
                             if (string.IsNullOrWhiteSpace(location.Key))
                             {
-                                LogNoKeyError(location);
+                                if (RequireKeySet)
+                                {
+                                    LogNoKeyError(location);
+                                }
                             }
                             else if (seenDisplayers.TryGetValue(location.Key, out DisplayerLocation duplicateLocation))
                             {
@@ -131,7 +136,7 @@ namespace ShowMeTheXAML.MSBuild
             void LogDuplicateKeyError(DisplayerLocation location1, DisplayerLocation location2)
             {
                 LogError("Duplicate key specified",
-                    $"Duplicate key specified on more than one XamlDisplay element. '{location1.File}' line {location1.Line}, position {location1.Column} and '{location2.File}' line {location2.Line}, position {location2.Column}", 
+                    $"Duplicate key specified on more than one XamlDisplay element. '{location1.File}' line {location1.Line}, position {location1.Column} and '{location2.File}' line {location2.Line}, position {location2.Column}",
                     location1.File, location1.Line, location1.Column);
             }
 

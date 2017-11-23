@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <ShowMeTheXAMLRequireKeySet Condition="'$(ShowMeTheXAMLRequireKeySet)' == ''">True</ShowMeTheXAMLRequireKeySet>
     <ShowMeTheXAMLPath Condition="$(ShowMeTheXAMLPath) == '' Or $(ShowMeTheXAMLPath) == '*Undefined*'">$(MSBuildThisFileDirectory)..\..\</ShowMeTheXAMLPath>
   </PropertyGroup>
   
@@ -10,7 +11,8 @@
   <Target Name="BuildXamlDictionary" BeforeTargets="MarkupCompilePass1">
     <BuildXamlDictionaryTask 
       PageMarkup="@(Page)"
-      OutputPath="$(IntermediateOutputPath)">
+      OutputPath="$(IntermediateOutputPath)"
+      RequireKeySet="$(ShowMeTheXAMLRequireKeySet)">
       
       <Output ItemName="Compile" TaskParameter="GeneratedCodeFiles" />
     </BuildXamlDictionaryTask>

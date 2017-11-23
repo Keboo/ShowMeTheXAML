@@ -25,6 +25,7 @@
                 ToolTip="Resource name: MaterialDesignRaisedButton">
                 _MID
             </Button>
+            <showMeTheXaml:XamlDisplay.Xaml>Foo</showMeTheXaml:XamlDisplay.Xaml>
         </showMeTheXaml:XamlDisplay>
         <showMeTheXaml:XamlDisplay Key="EF5F7A19-8014-4BEB-98B0-4D89898FFA4B">
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="100"
