@@ -13,7 +13,7 @@ namespace ShowMeTheXAML
 
         public static string Resolve(string key)
         {
-            if (XamlByKey.TryGetValue(key, out string xaml))
+            if (key != null && XamlByKey.TryGetValue(key, out string xaml))
             {
                 return xaml;
             }

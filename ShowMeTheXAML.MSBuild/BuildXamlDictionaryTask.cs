@@ -34,8 +34,10 @@ namespace ShowMeTheXAML.MSBuild
         /// <returns>The location of generated code files.</returns>
         [Required]
         public string OutputPath { get; set; }
+        
+        public string RequireKeySet { get; set; }
 
-        public bool RequireKeySet { get; set; } = true;
+        public string GeneratedFileName { get; set; }
 
         private bool _success;
         public override bool Execute()
@@ -80,6 +82,7 @@ namespace ShowMeTheXAML.MSBuild
                         }
                         if (_cancelRequested) yield break;
 
+                        int displayerIndex = 1;
                         foreach (XElement displayer in document.Descendants(XName.Get("XamlDisplay",
                             "clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML")))
                         {
@@ -87,9 +90,18 @@ namespace ShowMeTheXAML.MSBuild
                             DisplayerLocation location = new DisplayerLocation(fullPath, displayer);
                             if (string.IsNullOrWhiteSpace(location.Key))
                             {
-                                if (RequireKeySet)
+                                if (bool.TryParse(RequireKeySet, out bool keyIsRequired) && keyIsRequired)
                                 {
                                     LogNoKeyError(location);
+                                }
+                                else
+                                {
+                                    location.Key = item.ItemSpec.ToLowerInvariant();
+                                    if (location.Key.EndsWith(".xaml", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        location.Key = location.Key.Substring(0, location.Key.Length - 5) + ".baml";
+                                    }
+                                    location.Key += $"_{displayerIndex++}";
                                 }
                             }
                             else if (seenDisplayers.TryGetValue(location.Key, out DisplayerLocation duplicateLocation))
@@ -162,7 +174,7 @@ namespace ShowMeTheXAML.MSBuild
             public string File { get; }
             public int Line { get; }
             public int Column { get; }
-            public string Key { get; }
+            public string Key { get; set; }
 
             public DisplayerLocation(string file, XElement displayer)
             {
@@ -181,7 +193,10 @@ namespace ShowMeTheXAML.MSBuild
 
         private ITaskItem BuildGeneratedFile(IEnumerable<(string key, string xaml)> pairs)
         {
-            string generatedFilePath = Path.Combine(OutputPath, "Generated.g.cs");
+            string generatedFileName = string.IsNullOrWhiteSpace(GeneratedFileName)
+                ? GeneratedFileName
+                : "ShowMeTheXaml_XamlDictionary.g.cs";
+            string generatedFilePath = Path.Combine(OutputPath, generatedFileName);
             File.WriteAllText(generatedFilePath, $@"
 using System.Collections.Generic;
 

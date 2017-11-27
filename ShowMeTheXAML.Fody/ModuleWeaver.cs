@@ -89,64 +89,310 @@ public partial class ModuleWeaver
                             replace = true;
                             var document = BamlReader.ReadDocument(rrStream);
 
-                            Stack<BamlRecord> elementStack = new Stack<BamlRecord>();
-                            ushort? displayerTypeId = null;
-                            int i = 0;
-                            bool inDisplayer = false;
-                            foreach (BamlRecord item in document)
+                            Stack<(int, ushort?)> elementStack = new Stack<(int, ushort?)>();
+                            ushort? displayerTypeId = null, displayerAssemblyId = null, keyAttributeId = null;
+                            int displayerIndex = 1;
+                            Func<ushort, ushort> typeIdConverter = x => x;
+                            Func<ushort, ushort> attributeIdConverter = x => x;
+                            bool hasKey = false;
+                            ushort typeId = 0;
+                            ushort? lastAttributeId = null;
+                            for(int i = 0; i < document.Count; i++)
                             {
                                 string extra = "";
-                                if (item.Type == BamlRecordType.LineNumberAndPosition &&
-                                    item is LineNumberAndPositionRecord lpRecord)
+                                int itemIndex = i;
+                                BamlRecord item = document[i];
+                                switch (item.Type)
                                 {
-                                    extra = $"{lpRecord.LineNumber}, {lpRecord.LinePosition}";
-                                }
-                                else if (item.Type == BamlRecordType.TypeInfo && item is TypeInfoRecord typeRecord)
-                                {
-                                    extra = $"{typeRecord.TypeFullName} TypeId {typeRecord.TypeId}";
-                                    if (typeRecord.TypeFullName == "ShowMeTheXAML.XamlDisplay")
-                                    {
-                                        displayerTypeId = typeRecord.TypeId;
-                                    }
-                                }
-                                else if (item.Type == BamlRecordType.ElementStart &&
-                                         item is ElementStartRecord startRecord)
-                                {
-                                    extra = $" TypeId {startRecord.TypeId}";
-                                    if (startRecord.TypeId == displayerTypeId)
-                                    {
-                                        elementStack.Push(item);
-                                        LogWarning("~~Found XamlDisplayer~~");
-                                    }
-                                }
-                                else if (item.Type == BamlRecordType.AttributeInfo &&
-                                         item is AttributeInfoRecord attribRecord)
-                                {
-                                    extra = $"Name: {attribRecord.Name} Id: {attribRecord.AttributeId} OwnerTypeId {attribRecord.OwnerTypeId} Usage {attribRecord.AttributeUsage}";
-                                }
-                                else if (item.Type == BamlRecordType.ElementEnd && item is ElementEndRecord endRecord)
-                                {
-                                    if (elementStack.Count > 0)
-                                    {
-                                        elementStack.Pop();
-                                        if (elementStack.Count == 0)
+                                    case BamlRecordType.DocumentStart:
+
+                                        break;
+                                    case BamlRecordType.DocumentEnd:
+
+                                        break;
+                                    case BamlRecordType.ElementStart:
                                         {
-                                            LogWarning("~~Leaving XamlDisplayer~~");
+                                            var startRecord = (ElementStartRecord)item;
+                                            startRecord.TypeId = typeIdConverter(startRecord.TypeId);
+
+                                            extra = $" TypeId {startRecord.TypeId}";
+                                            if (startRecord.TypeId == displayerTypeId || elementStack.Count > 0)
+                                            {
+                                                elementStack.Push((i, lastAttributeId));
+                                                if (startRecord.TypeId == displayerTypeId) LogWarning("~~Found XamlDisplayer~~");
+                                            }
                                         }
-                                    }
+                                        break;
+                                    case BamlRecordType.ElementEnd:
+                                        {
+                                            if (elementStack.Count > 0)
+                                            {
+                                                (int, ushort?) elementStart = elementStack.Pop();
+                                                if (elementStack.Count == 0)
+                                                {
+                                                    if (!hasKey && displayerTypeId != null)
+                                                    {
+                                                        int index = elementStart.Item1;
+                                                        if (keyAttributeId == null)
+                                                        {
+                                                            ushort attributeId = elementStart.Item2 != null
+                                                                ? (ushort)(elementStart.Item2 + 1) 
+                                                                : (ushort)0;
+                                                            keyAttributeId = attributeId;
+                                                            var keyAttribute = new AttributeInfoRecord
+                                                            {
+                                                                Name = "Key",
+                                                                AttributeId = attributeId,
+                                                                OwnerTypeId = displayerTypeId.Value,
+                                                                AttributeUsage = 0,
+                                                            };
+                                                            document.Insert(++index, keyAttribute);
+                                                            LogWarning($"Adding key attribute with id {attributeId}");
+                                                        }
+                                                        var propertyValue = new PropertyRecord
+                                                        {
+                                                            AttributeId = keyAttributeId.Value,
+                                                            Value = $"{entry.Key.ToString().ToLowerInvariant()}_{displayerIndex++}"
+                                                        };
+                                                        document.Insert(++index, propertyValue);
+                                                        i = index;
+                                                    }
+                                                    LogWarning("~~Leaving XamlDisplayer~~");
+
+                                                    hasKey = false;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case BamlRecordType.Property:
+                                        {
+                                            var propertyRecord = (PropertyRecord)item;
+                                            propertyRecord.AttributeId = attributeIdConverter(propertyRecord.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyCustom:
+                                        {
+                                            var customProperty = (PropertyCustomRecord)item;
+                                            customProperty.AttributeId = attributeIdConverter(customProperty.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyComplexStart:
+                                        {
+                                            var property = (PropertyComplexStartRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyComplexEnd:
+
+                                        break;
+                                    case BamlRecordType.PropertyArrayStart:
+                                        {
+                                            var property = (PropertyArrayStartRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyArrayEnd:
+
+                                        break;
+                                    case BamlRecordType.PropertyListStart:
+                                        {
+                                            var property = (PropertyListStartRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyListEnd:
+
+                                        break;
+                                    case BamlRecordType.PropertyDictionaryStart:
+                                        {
+                                            var property = (PropertyDictionaryStartRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyDictionaryEnd:
+
+                                        break;
+                                    case BamlRecordType.LiteralContent:
+
+                                        break;
+                                    case BamlRecordType.Text:
+
+                                        break;
+                                    case BamlRecordType.TextWithConverter:
+
+                                        break;
+                                    case BamlRecordType.RoutedEvent:
+
+                                        break;
+                                    case BamlRecordType.XmlnsProperty:
+
+                                        break;
+                                    case BamlRecordType.DefAttribute:
+
+                                        break;
+                                    case BamlRecordType.PIMapping:
+
+                                        break;
+                                    case BamlRecordType.AssemblyInfo:
+                                        {
+                                            var assembly = (AssemblyInfoRecord)item;
+                                            var assemblyNameReference = AssemblyNameReference.Parse(assembly.AssemblyFullName);
+                                            if (assemblyNameReference.Name == "ShowMeTheXAML")
+                                            {
+                                                displayerAssemblyId = assembly.AssemblyId;
+                                                LogWarning($"~~ Found SMIX Assembly Id {displayerAssemblyId}~~");
+                                            }
+                                            extra = $"Id: {assembly.AssemblyId} Name: {assembly.AssemblyFullName}";
+                                        }
+                                        break;
+                                    case BamlRecordType.TypeInfo:
+                                        {
+                                            var typeRecord = (TypeInfoRecord)item;
+                                            typeRecord.TypeId = typeIdConverter(typeRecord.TypeId);
+
+                                            extra = $"{typeRecord.TypeFullName} TypeId: {typeRecord.TypeId} AssemblyId: {typeRecord.AssemblyId}";
+                                            if (typeRecord.TypeFullName == "ShowMeTheXAML.XamlDisplay" && typeRecord.AssemblyId == displayerAssemblyId)
+                                            {
+                                                LogWarning($"~~ Found Displayer Id {typeRecord.TypeId}~~");
+                                                displayerTypeId = typeRecord.TypeId;
+                                            }
+                                            typeRecord.TypeId = typeId++;
+                                        }
+                                        break;
+                                    case BamlRecordType.TypeSerializerInfo:
+
+                                        break;
+                                    case BamlRecordType.AttributeInfo:
+                                        {
+                                            var attribRecord = (AttributeInfoRecord)item;
+                                            attribRecord.AttributeId = attributeIdConverter(attribRecord.AttributeId);
+                                            lastAttributeId = attribRecord.AttributeId;
+
+                                            if (attribRecord.OwnerTypeId == displayerTypeId && attribRecord.Name == "Key")
+                                            {
+                                                if (elementStack.Count > 0)
+                                                {
+                                                    hasKey = true;
+                                                }
+                                                if (keyAttributeId == null)
+                                                {
+                                                    keyAttributeId = attribRecord.AttributeId;
+                                                    LogWarning($"~~ Found Key Id {keyAttributeId}~~");
+                                                }
+                                                else
+                                                {
+                                                    LogWarning($"!!!Duplicate key found!!!");
+                                                }
+                                            }
+                                            extra = $"Name: {attribRecord.Name} Id: {attribRecord.AttributeId} OwnerTypeId {attribRecord.OwnerTypeId} Usage {attribRecord.AttributeUsage}";
+                                        }
+                                        break;
+                                    case BamlRecordType.StringInfo:
+
+                                        break;
+                                    case BamlRecordType.PropertyStringReference:
+                                        {
+                                            var property = (PropertyStringReferenceRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyTypeReference:
+                                        {
+                                            var property = (PropertyTypeReferenceRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyWithExtension:
+                                        {
+                                            var property = (PropertyWithExtensionRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                        }
+                                        break;
+                                    case BamlRecordType.PropertyWithConverter:
+                                        {
+                                            var property = (PropertyWithConverterRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                            extra = $"AttribId: {property.AttributeId} Value: {property.Value}";
+                                        }
+                                        break;
+                                    case BamlRecordType.DeferableContentStart:
+
+                                        break;
+                                    case BamlRecordType.DefAttributeKeyString:
+
+                                        break;
+                                    case BamlRecordType.DefAttributeKeyType:
+
+                                        break;
+                                    case BamlRecordType.KeyElementStart:
+
+                                        break;
+                                    case BamlRecordType.KeyElementEnd:
+
+                                        break;
+                                    case BamlRecordType.ConstructorParametersStart:
+
+                                        break;
+                                    case BamlRecordType.ConstructorParametersEnd:
+
+                                        break;
+                                    case BamlRecordType.ConstructorParameterType:
+
+                                        break;
+                                    case BamlRecordType.ConnectionId:
+
+                                        break;
+                                    case BamlRecordType.ContentProperty:
+
+                                        break;
+                                    case BamlRecordType.NamedElementStart:
+
+                                        break;
+                                    case BamlRecordType.StaticResourceStart:
+
+                                        break;
+                                    case BamlRecordType.StaticResourceEnd:
+
+                                        break;
+                                    case BamlRecordType.StaticResourceId:
+
+                                        break;
+                                    case BamlRecordType.TextWithId:
+
+                                        break;
+                                    case BamlRecordType.PresentationOptionsAttribute:
+
+                                        break;
+                                    case BamlRecordType.LineNumberAndPosition:
+                                        {
+                                            var lpRecord = (LineNumberAndPositionRecord)item;
+                                            extra = $"{lpRecord.LineNumber}, {lpRecord.LinePosition}";
+                                        }
+                                        break;
+                                    case BamlRecordType.LinePosition:
+
+                                        break;
+                                    case BamlRecordType.OptimizedStaticResource:
+
+                                        break;
+                                    case BamlRecordType.PropertyWithStaticResourceId:
+                                        {
+                                            var property = (PropertyWithStaticResourceIdRecord)item;
+                                            property.AttributeId = attributeIdConverter(property.AttributeId);
+                                        }
+                                        break;
+                                    default:
+                                        throw new NotSupportedException();
                                 }
-                                else if (item.Type == BamlRecordType.PropertyWithConverter && item is PropertyRecord pwcRecord)
-                                {
-                                    extra = $"AttribId: {pwcRecord.AttributeId} Value: {pwcRecord.Value}";
-                                }
-                                LogWarning($"{i++} {item.Type} {extra}");
+
+                                LogWarning($"{itemIndex} {item.Type} {extra}");
                             }
                             var outStream = new MemoryStream();
                             BamlWriter.WriteDocument(document, outStream);
                             outStream.Position = 0;
                             LogWarning($"Got entry {entry.Key} with stream {outStream.Length}");
 
-                            writer.AddResource("2" + (string)entry.Key, outStream);
+                            writer.AddResource((string)entry.Key, outStream);
                         }
                     }
                     writer.Generate();
@@ -154,7 +400,8 @@ public partial class ModuleWeaver
                     {
                         ms.Position = 0;
                         LogWarning($"Write {ms.Length} bytes");
-                        ModuleDefinition.Resources.Add(new EmbeddedResource("ShowMeTheXAML2.g.resources", resource.Attributes,
+                        ModuleDefinition.Resources.Remove(resource);
+                        ModuleDefinition.Resources.Add(new EmbeddedResource(resource.Name, resource.Attributes,
                             ms.ToArray()));
                     }
                 }
@@ -172,6 +419,21 @@ public partial class ModuleWeaver
     public void AfterWeaving()
     {
 
+    }
+}
+
+namespace System
+{
+    public struct ValueTuple<T1, T2>
+    {
+        public T1 Item1;
+        public T2 Item2;
+
+        public ValueTuple(T1 item1, T2 item2)
+        {
+            Item1 = item1;
+            Item2 = item2;
+        }
     }
 }
 

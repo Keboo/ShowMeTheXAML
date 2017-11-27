@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ShowMeTheXAMLRequireKeySet Condition="'$(ShowMeTheXAMLRequireKeySet)' == ''">True</ShowMeTheXAMLRequireKeySet>
-    <ShowMeTheXAMLPath Condition="$(ShowMeTheXAMLPath) == '' Or $(ShowMeTheXAMLPath) == '*Undefined*'">$(MSBuildThisFileDirectory)..\..\</ShowMeTheXAMLPath>
+    <ShowMeTheXAMLRequireKeySet Condition="'$(ShowMeTheXAMLRequireKeySet)' == '' Or $(ShowMeTheXAMLRequireKeySet) == '*Undefined*'">True</ShowMeTheXAMLRequireKeySet>
+    <ShowMeTheXAMLGeneratedFileName Condition="'$(ShowMeTheXAMLGeneratedFileName)' == '' Or $(ShowMeTheXAMLGeneratedFileName) == '*Undefined*'">ShowMeTheXaml_XamlDictionary.g.cs</ShowMeTheXAMLGeneratedFileName>
+    <ShowMeTheXAMLAssemblyDirectory Condition="$(ShowMeTheXAMLAssemblyDirectory) == '' Or $(ShowMeTheXAMLAssemblyDirectory) == '*Undefined*'">$(MSBuildThisFileDirectory)..\..\</ShowMeTheXAMLAssemblyDirectory>
   </PropertyGroup>
   
   <UsingTask TaskName="ShowMeTheXAML.MSBuild.BuildXamlDictionaryTask"
-             AssemblyFile="$(ShowMeTheXAMLPath)\ShowMeTheXAML.MSBuild.dll"/>
+             AssemblyFile="$(ShowMeTheXAMLAssemblyDirectory)\ShowMeTheXAML.MSBuild.dll"/>
 
   <Target Name="BuildXamlDictionary" BeforeTargets="MarkupCompilePass1">
     <BuildXamlDictionaryTask 
       PageMarkup="@(Page)"
       OutputPath="$(IntermediateOutputPath)"
-      RequireKeySet="$(ShowMeTheXAMLRequireKeySet)">
+      RequireKeySet="$(ShowMeTheXAMLRequireKeySet)"
+      GeneratedFileName="$(ShowMeTheXAMLGeneratedFileName)">
       
       <Output ItemName="Compile" TaskParameter="GeneratedCodeFiles" />
     </BuildXamlDictionaryTask>
