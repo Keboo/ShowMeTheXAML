@@ -1,7 +1,7 @@
 # configuration for master/CI branch
 -
   environment:
-    smtx_version: 1.0.0
+    smtx_version: 1.0.1
     APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
   branches:
     only:
@@ -37,17 +37,19 @@
       nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
       nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+    
+      nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
   artifacts:
   - path: '*.nupkg'
     name: NuGets
-  #deploy:
-  #- provider: Environment
-  #  name: NuGet publish
+  deploy:
+  - provider: Environment
+    name: NuGet publish
 
 #Configuration for releases
 -
   environment:
-    smtx_version: 1.0.0
+    smtx_version: 1.0.1
     APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
   branches:
     only:
@@ -80,9 +82,11 @@
       nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
       nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+    
+      nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
   artifacts:
   - path: '*.nupkg'
     name: NuGets
-  #deploy:
-  #- provider: Environment
-  #  name: NuGet publish
+  deploy:
+  - provider: Environment
+    name: NuGet publish
