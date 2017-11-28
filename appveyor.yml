@@ -40,9 +40,9 @@
   artifacts:
   - path: '*.nupkg'
     name: NuGets
-  #deploy:
-  #- provider: Environment
-  #  name: NuGet publish
+  deploy:
+  - provider: Environment
+    name: NuGet publish
 
 #Configuration for releases
 -
@@ -83,6 +83,6 @@
   artifacts:
   - path: '*.nupkg'
     name: NuGets
-  #deploy:
-  #- provider: Environment
-  #  name: NuGet publish
+  deploy:
+  - provider: Environment
+    name: NuGet publish
