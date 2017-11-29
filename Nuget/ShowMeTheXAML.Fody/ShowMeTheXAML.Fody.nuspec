@@ -15,6 +15,7 @@
     <dependencies>
       <dependency id="ShowMeTheXAML" version="[0.0.0,0.1.0)" />
       <dependency id="BamlParser" version="1.0.0" />
+      <dependency id="Fody" version="[2.2.1,2.3.0)" />
     </dependencies>
   </metadata>
 </package>
