@@ -1,7 +1,7 @@
 # configuration for master/CI branch
 -
   environment:
-    smtx_version: 1.0.3
+    smtx_version: 1.0.5
     APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
   branches:
     only:
@@ -30,15 +30,15 @@
     verbosity: minimal
   after_build:
   - ps: >-
-      .\Nuget\UpdateNuspecFiles.ps1 -Version "$env:smtx_version"
+      .\Nuget\UpdateNuspecFiles.ps1 -Version "$env:smtx_version-ci$env:appveyor_build_number"
     
-      nuget pack Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec -Version "$env:smtx_version" -Symbols
+      nuget pack Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
-      nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version" -Symbols
+      nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
-      nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version" -Symbols
+      nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
-      nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version "$env:smtx_version" -Symbols
+      nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
   artifacts:
   - path: '*.nupkg'
     name: NuGets
@@ -49,7 +49,7 @@
 #Configuration for releases
 -
   environment:
-    smtx_version: 1.0.2
+    smtx_version: 1.0.4
     APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
   branches:
     only:
@@ -77,13 +77,13 @@
   - ps: >-
       .\Nuget\UpdateNuspecFiles.ps1 -Version "$env:smtx_version"
     
-      nuget pack Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+      nuget pack Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec -Version "$env:smtx_version" -Symbols
     
-      nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+      nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version" -Symbols
     
-      nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+      nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version" -Symbols
     
-      nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
+      nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version "$env:smtx_version" -Symbols
   artifacts:
   - path: '*.nupkg'
     name: NuGets
