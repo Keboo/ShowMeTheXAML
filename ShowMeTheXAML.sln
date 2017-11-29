@@ -20,11 +20,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{FB3D7B74-8B15-49E4-8712-0A43D3DEFA12}"
 	ProjectSection(SolutionItems) = preProject
 		Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec = Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec
+		Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec = Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec
 		Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec = Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec
 		Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec = Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeTheXAML.Fody", "ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.csproj", "{B48DAF53-773E-4943-A6C0-EB8127190F48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML.Fody", "ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.csproj", "{B48DAF53-773E-4943-A6C0-EB8127190F48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
