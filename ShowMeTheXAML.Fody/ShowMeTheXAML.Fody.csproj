@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="BamlParser" Version="1.0.0" />
+    <PackageReference Include="Costura.Fody" Version="1.6.2" />
     <PackageReference Include="FodyCecil" Version="2.2.1" />
     <PackageReference Include="gitlink" Version="3.1.0" />
   </ItemGroup>
