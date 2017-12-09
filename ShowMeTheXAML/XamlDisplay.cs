@@ -13,6 +13,19 @@ namespace ShowMeTheXAML
             DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));
         }
 
+        public static readonly DependencyProperty IgnoreProperty = DependencyProperty.RegisterAttached(
+            "Ignore", typeof(Scope), typeof(XamlDisplay), new PropertyMetadata(default(Scope)));
+
+        public static void SetIgnore(DependencyObject element, Scope value)
+        {
+            element.SetValue(IgnoreProperty, value);
+        }
+
+        public static Scope GetIgnore(DependencyObject element)
+        {
+            return (Scope) element.GetValue(IgnoreProperty);
+        }
+
         public static void Init(params Assembly[] assemblies)
         {
             if (assemblies?.Any() == true)

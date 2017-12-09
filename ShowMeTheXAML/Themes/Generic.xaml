@@ -5,7 +5,7 @@
     
     <Style TargetType="{x:Type local:XamlDisplay}">
         <Style.Resources>
-            <local:IndentedXamlFormatter x:Key="IndentedXamlFormatter" />
+            <local:XamlFormatter x:Key="IndentedXamlFormatter" />
         </Style.Resources>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
