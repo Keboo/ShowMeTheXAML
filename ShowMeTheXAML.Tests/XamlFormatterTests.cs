@@ -22,7 +22,7 @@ namespace ShowMeTheXAML.Tests
             var formatted = formatter.FormatXaml(xaml);
 
             //Assert
-            Assert.AreEqual("<Button />\r\n<Button />", formatted);
+            Assert.AreEqual("<Button />\r\n<Button />".NormalizeLineEndings(), formatted.NormalizeLineEndings());
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace ShowMeTheXAML.Tests
             var formatted = formatter.FormatXaml(xaml);
 
             //Assert
-            Assert.AreEqual("<Button />\r\n<Button />", formatted);
+            Assert.AreEqual("<Button />\r\n<Button />".NormalizeLineEndings(), formatted.NormalizeLineEndings());
         }
 
         [TestMethod]
@@ -71,7 +71,7 @@ namespace ShowMeTheXAML.Tests
             Assert.AreEqual(@"<Button>
   <TextBlock Text=""Some Text"" />
 </Button>
-<Button />", formatted);
+<Button />".NormalizeLineEndings(), formatted.NormalizeLineEndings());
         }
     }
 }
