@@ -73,35 +73,5 @@ namespace ShowMeTheXAML.Tests
 </Button>
 <Button />", formatted);
         }
-
-        [TestMethod]
-        public void IndentationWithAttributesOnNewLines()
-        {
-            //Arrange
-            string xaml = @"
-<StackPanel showMeTheXaml:XamlDisplay.Ignore=""This"" xmlns:showMeTheXaml=""clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"">
-  <Button Style=""{StaticResource MaterialDesignRaisedLightButton}"" Width=""100""
-          ToolTip=""Resource name: MaterialDesignRaisedLightButton"">
-        _LIGHT
-  </Button>
-  
-  <Button Style=""{StaticResource MaterialDesignRaisedButton}"" Width=""100""
-          ToolTip=""Resource name: MaterialDesignRaisedButton"">
-        _MID
-  </Button>
-</StackPanel>";
-
-            var formatter = new XamlFormatter { Indent = "  ", NewLineOnAttributes = true };
-
-            //Act
-            var formatted = formatter.FormatXaml(xaml);
-
-            //Assert
-            Assert.AreEqual(@"<Button>
-  <TextBlock Text=""Some Text"" />
-</Button>
-<Button />", formatted);
-        }
-
     }
 }
