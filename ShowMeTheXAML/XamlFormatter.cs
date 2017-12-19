@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Xsl;
 
 namespace ShowMeTheXAML
 {
@@ -31,6 +30,11 @@ namespace ShowMeTheXAML
                 {
                     foreach (var node in document.DescendantNodes().OfType<XElement>().ToList())
                     {
+                        if (node.Name.LocalName.Contains(".") && node.Parent?.Name == RemoveName)
+                        {
+                            node.Remove();
+                            continue;
+                        }
                         //TODO Check namespace
                         var ignoreAttribute = node.Attributes().FirstOrDefault(a => a.Name.LocalName == "XamlDisplay.Ignore");
                         switch (ignoreAttribute?.Value)

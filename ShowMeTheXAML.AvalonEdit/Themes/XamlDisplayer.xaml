@@ -18,14 +18,13 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                             <avalonedit:TextEditor Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" 
                                                    SyntaxHighlighting="XML" FontFamily="Consolas" IsReadOnly="True" Grid.Column="2"
                                                    HorizontalScrollBarVisibility="Auto"
