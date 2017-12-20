@@ -100,7 +100,7 @@ public class ModuleWeaver
                                 continue;
                             }
 
-                            Stack<(int, ushort?)> elementStack = new Stack<(int, ushort?)>();
+                            Stack<(int, ushort?, ushort)> elementStack = new Stack<(int, ushort?, ushort)>();
                             ushort? displayerTypeId = null, displayerAssemblyId = null, keyAttributeId = null;
                             int displayerIndex = 1;
                             List<Func<ushort, ushort>> attributeConversions = new List<Func<ushort, ushort>>();
@@ -135,7 +135,7 @@ public class ModuleWeaver
                                             var startRecord = (ElementStartRecord)item;
                                             if (startRecord.TypeId == displayerTypeId || elementStack.Count > 0)
                                             {
-                                                elementStack.Push((i, lastAttributeId));
+                                                elementStack.Push((i, lastAttributeId, typeId));
                                             }
                                         }
                                         break;
@@ -143,7 +143,7 @@ public class ModuleWeaver
                                         {
                                             if (elementStack.Count > 0)
                                             {
-                                                (int, ushort?) elementStart = elementStack.Pop();
+                                                (int, ushort?, ushort) elementStart = elementStack.Pop();
                                                 if (elementStack.Count == 0)
                                                 {
                                                     if (!hasKey && displayerTypeId != null)
@@ -185,6 +185,7 @@ public class ModuleWeaver
                                                         document.Insert(++index, propertyValue);
                                                         if (resetIndex)
                                                         {
+                                                            typeId = elementStart.Item3;
                                                             i = index;
                                                         }
                                                     }
@@ -469,6 +470,20 @@ namespace System
         {
             Item1 = item1;
             Item2 = item2;
+        }
+    }
+
+    public struct ValueTuple<T1, T2, T3>
+    {
+        public T1 Item1;
+        public T2 Item2;
+        public T3 Item3;
+
+        public ValueTuple(T1 item1, T2 item2, T3 item3)
+        {
+            Item1 = item1;
+            Item2 = item2;
+            Item3 = item3;
         }
     }
 }
