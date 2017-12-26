@@ -48,21 +48,14 @@ namespace ShowMeTheXAML
             }
         }
 
-        public static readonly DependencyProperty KeyProperty = DependencyProperty.Register(
-            nameof(Key), typeof(string), typeof(XamlDisplay), new PropertyMetadata(default(string), OnKeyChanged));
-
-        private static void OnKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is XamlDisplay xamlDisplay)
-            {
-                xamlDisplay.ReloadXaml();
-            }
-        }
-
         public string Key
         {
-            get => (string) GetValue(KeyProperty);
-            set => SetValue(KeyProperty, value);
+            get => _key;
+            set
+            {
+                _key = value;
+                ReloadXaml();
+            }
         }
 
         public static readonly DependencyProperty XamlProperty = DependencyProperty.Register(
@@ -101,6 +94,8 @@ namespace ShowMeTheXAML
         }
 
         private bool _isLoading;
+        private string _key;
+
         private void ReloadXaml()
         {
             if (_isLoading) return;

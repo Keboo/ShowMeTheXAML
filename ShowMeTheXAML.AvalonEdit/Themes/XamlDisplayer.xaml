@@ -3,7 +3,15 @@
                     xmlns:showMeTheXaml="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
                     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
                     xmlns:avalonEdit="clr-namespace:ShowMeTheXAML.AvalonEdit">
-    
+
+    <Style x:Key="AvalonTextEditorXamlDisplay" TargetType="avalonedit:TextEditor" BasedOn="{StaticResource {x:Type avalonedit:TextEditor}}">
+        <Setter Property="SyntaxHighlighting" Value="XML" />
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+
     <Style x:Key="AvalonEditXamlDisplay" TargetType="showMeTheXaml:XamlDisplay" BasedOn="{StaticResource {x:Type showMeTheXaml:XamlDisplay}}">
         <Style.Resources>
             <avalonEdit:TextDocumentValueConverter x:Key="TextDocumentValueConverter"/>
@@ -26,13 +34,13 @@
                             </Grid.ColumnDefinitions>
                             <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                             <avalonedit:TextEditor Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" 
-                                                   SyntaxHighlighting="XML" FontFamily="Consolas" IsReadOnly="True" Grid.Column="2"
-                                                   HorizontalScrollBarVisibility="Auto"
-                                                   VerticalScrollBarVisibility="Auto" VerticalAlignment="Center"/>
+                                                   Grid.Column="2" VerticalAlignment="Center" Style="{StaticResource AvalonTextEditorXamlDisplay}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+
 </ResourceDictionary>
