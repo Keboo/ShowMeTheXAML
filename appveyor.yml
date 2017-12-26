@@ -37,8 +37,6 @@
       nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
     
       nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
-    
-      nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version "$env:smtx_version-ci$env:appveyor_build_number" -Symbols
   artifacts:
   - path: '*.nupkg'
     name: NuGets
@@ -82,8 +80,6 @@
       nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version "$env:smtx_version" -Symbols
     
       nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version "$env:smtx_version" -Symbols
-    
-      nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version "$env:smtx_version" -Symbols
   artifacts:
   - path: '*.nupkg'
     name: NuGets
