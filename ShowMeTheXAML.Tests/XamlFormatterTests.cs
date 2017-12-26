@@ -73,5 +73,33 @@ namespace ShowMeTheXAML.Tests
 </Button>
 <Button />".NormalizeLineEndings(), formatted.NormalizeLineEndings());
         }
+
+        [TestMethod]
+        public void CanFormatElementSyntaxCorrectly()
+        {
+            //Arrange
+            string xaml =
+                @"<DialogHost>
+  <Border>
+    <Button>RUN</Button>
+  </Border>
+</DialogHost>";
+
+            var formatter = new XamlFormatter { Indent = "  " };
+
+            //Act
+            var formatted = formatter.FormatXaml(xaml);
+
+            //Assert
+            Assert.AreEqual(@"<DialogHost>
+  <Border>
+    <Button>
+      RUN
+    </Button>
+  </Border>
+</DialogHost>".NormalizeLineEndings(), formatted.NormalizeLineEndings());
+
+
+        }
     }
 }

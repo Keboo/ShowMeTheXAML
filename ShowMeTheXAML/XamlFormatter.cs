@@ -25,7 +25,7 @@ namespace ShowMeTheXAML
             try
             {
                 var document = XDocument.Parse(xaml);
-                
+
                 if (!IncludeIgnoredElements)
                 {
                     foreach (var node in document.DescendantNodes().OfType<XElement>().ToList())
@@ -55,9 +55,11 @@ namespace ShowMeTheXAML
                 {
                     foreach (var textElement in document.DescendantNodes().OfType<XText>())
                     {
+                        int indentLevel = CountParents(textElement);
                         textElement.Value = Environment.NewLine +
-                                            string.Join("", Enumerable.Repeat(Indent, CountParents(textElement))) +
-                                            textElement.Value.Trim() + Environment.NewLine;
+                                            string.Join("", Enumerable.Repeat(Indent, indentLevel)) +
+                                            textElement.Value.Trim() + Environment.NewLine
+                            + string.Join("", Enumerable.Repeat(Indent, Math.Max(0, indentLevel - 1)));
                     }
                 }
                 var sb = new StringBuilder();
@@ -67,7 +69,9 @@ namespace ShowMeTheXAML
                     Indent = true,
                     IndentChars = Indent,
                     NewLineOnAttributes = NewLineOnAttributes,
-                    OmitXmlDeclaration = true
+                    OmitXmlDeclaration = true,
+                    NewLineHandling = NewLineHandling.Replace,
+                    NewLineChars = Environment.NewLine,
                 }))
                 {
                     document.WriteTo(writer);
