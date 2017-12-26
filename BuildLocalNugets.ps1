@@ -12,7 +12,6 @@ if (!(Test-Path "nuget.exe")) {
 .\nuget pack Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec -Version $Version
 .\nuget pack Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec -Version $Version
 .\nuget pack Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec -Version $Version
-.\nuget pack Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec -Version $Version
 
 if ($TargetDir){
     Move-Item "ShowMeTheXAML.*.nupkg" $TargetDir -Force

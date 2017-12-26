@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeTheXAML", "ShowMeTheXAML\ShowMeTheXAML.csproj", "{26AE6FE7-8189-4075-922E-67ECA542044D}"
 EndProject
@@ -20,12 +20,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{FB3D7B74-8B15-49E4-8712-0A43D3DEFA12}"
 	ProjectSection(SolutionItems) = preProject
 		Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec = Nuget\ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.nuspec
-		Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec = Nuget\ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.nuspec
 		Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec = Nuget\ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.nuspec
 		Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec = Nuget\ShowMeTheXAML\ShowMeTheXAML.nuspec
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML.Fody", "ShowMeTheXAML.Fody\ShowMeTheXAML.Fody.csproj", "{B48DAF53-773E-4943-A6C0-EB8127190F48}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeTheXAML.Tests", "ShowMeTheXAML.Tests\ShowMeTheXAML.Tests.csproj", "{B872AD53-57C8-4537-BDA1-88CCEF74B555}"
 EndProject
@@ -47,10 +44,6 @@ Global
 		{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B48DAF53-773E-4943-A6C0-EB8127190F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B48DAF53-773E-4943-A6C0-EB8127190F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B48DAF53-773E-4943-A6C0-EB8127190F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B48DAF53-773E-4943-A6C0-EB8127190F48}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B872AD53-57C8-4537-BDA1-88CCEF74B555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B872AD53-57C8-4537-BDA1-88CCEF74B555}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B872AD53-57C8-4537-BDA1-88CCEF74B555}.Release|Any CPU.ActiveCfg = Release|Any CPU
