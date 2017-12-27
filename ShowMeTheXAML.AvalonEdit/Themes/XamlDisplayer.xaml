@@ -16,8 +16,7 @@
         <Style.Resources>
             <avalonEdit:TextDocumentValueConverter x:Key="TextDocumentValueConverter"/>
         </Style.Resources>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="DockPanel.Dock" Value="Right" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="showMeTheXaml:XamlDisplay">
@@ -26,16 +25,16 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="10" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        <DockPanel>
                             <avalonedit:TextEditor Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" 
-                                                   Grid.Column="2" VerticalAlignment="Center" Style="{StaticResource AvalonTextEditorXamlDisplay}"/>
-                        </Grid>
+                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Style="{StaticResource AvalonTextEditorXamlDisplay}"
+                                                   DockPanel.Dock="{Binding Path=(DockPanel.Dock), RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+
+                        </DockPanel>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
