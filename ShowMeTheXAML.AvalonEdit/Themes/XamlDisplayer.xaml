@@ -24,7 +24,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            Padding="{TemplateBinding Padding}">
                         <DockPanel>
                             <avalonedit:TextEditor Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" 
                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
