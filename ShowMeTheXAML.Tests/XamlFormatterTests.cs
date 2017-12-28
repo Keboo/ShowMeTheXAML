@@ -119,7 +119,7 @@ namespace ShowMeTheXAML.Tests
 
             //Assert
             Assert.AreEqual(@"<!-- some comment -->
-<ItemsControl ItemsSource=""{Binding Items1}"" Grid.IsSharedSizeScope=""True"" Margin=""12 0 12 0""></ItemsControl>", formatted.NormalizeLineEndings());
+<ItemsControl ItemsSource=""{Binding Items1}"" Grid.IsSharedSizeScope=""True"" Margin=""12 0 12 0""></ItemsControl>".NormalizeLineEndings(), formatted.NormalizeLineEndings());
         }
 
         [TestMethod]
@@ -153,7 +153,7 @@ namespace ShowMeTheXAML.Tests
       <Border x:Name=""Border"" Padding=""8"" BorderThickness=""0 0 0 1"" BorderBrush=""{DynamicResource MaterialDesignDivider}""></Border>
     </DataTemplate>
   </ItemsControl.ItemTemplate>
-</ItemsControl>", formatted.NormalizeLineEndings());
+</ItemsControl>".NormalizeLineEndings(), formatted.NormalizeLineEndings());
         }
     }
 }
