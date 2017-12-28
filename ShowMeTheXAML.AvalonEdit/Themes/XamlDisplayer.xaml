@@ -26,7 +26,11 @@
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             Padding="{TemplateBinding Padding}">
-                        <DockPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
                             <avalonedit:TextEditor Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" 
                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -35,7 +39,7 @@
                             <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
 
-                        </DockPanel>
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

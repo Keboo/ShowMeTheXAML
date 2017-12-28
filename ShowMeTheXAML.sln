@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{FB3D7B74
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeTheXAML.Tests", "ShowMeTheXAML.Tests\ShowMeTheXAML.Tests.csproj", "{B872AD53-57C8-4537-BDA1-88CCEF74B555}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeTheXAML.MSBuild.Tests", "ShowMeTheXAML.MSBuild.Tests\ShowMeTheXAML.MSBuild.Tests.csproj", "{2D539C7F-E364-49B3-AE17-CD04AAB106E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{B872AD53-57C8-4537-BDA1-88CCEF74B555}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B872AD53-57C8-4537-BDA1-88CCEF74B555}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B872AD53-57C8-4537-BDA1-88CCEF74B555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D539C7F-E364-49B3-AE17-CD04AAB106E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D539C7F-E364-49B3-AE17-CD04AAB106E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D539C7F-E364-49B3-AE17-CD04AAB106E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D539C7F-E364-49B3-AE17-CD04AAB106E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

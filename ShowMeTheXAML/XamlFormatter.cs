@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,13 +10,23 @@ namespace ShowMeTheXAML
 {
     public class XamlFormatter : IXamlFormatter
     {
+        //TODO Fully qualify XName
+        private static readonly string IgnoredPropertyLocalName =
+            $"{nameof(XamlDisplay)}.{XamlDisplay.IgnoreProperty.Name}";
+
         public string Indent { get; set; } = "    ";
         public bool NewLineOnAttributes { get; set; }
         public bool FormatTextElements { get; set; } = true;
         public bool IncludeIgnoredElements { get; set; }
         public bool FixupIndentation { get; set; } = true;
-
         public bool RemoveEmptyLines { get; set; } = true;
+        public bool RemoveXamlDisplayerDeclaration { get; set; } = true;
+
+        public List<string> NamespacesToRemove { get; } = new List<string>
+        {
+            "http://schemas.microsoft.com/winfx/2006/xaml/presentation",
+            "http://schemas.microsoft.com/winfx/2006/xaml"
+        };
 
         public string FormatXaml(string xaml)
         {
@@ -35,8 +46,8 @@ namespace ShowMeTheXAML
                             node.Remove();
                             continue;
                         }
-                        //TODO Check namespace
-                        var ignoreAttribute = node.Attributes().FirstOrDefault(a => a.Name.LocalName == "XamlDisplay.Ignore");
+                        
+                        var ignoreAttribute = node.Attributes().FirstOrDefault(a => a.Name.LocalName == IgnoredPropertyLocalName);
                         switch (ignoreAttribute?.Value)
                         {
                             case nameof(Scope.This):
@@ -47,8 +58,14 @@ namespace ShowMeTheXAML
                                 node.Remove();
                                 break;
                         }
-                        //node.Attribute(XName.Get(XamlDisplay.IgnoreProperty.Name));
                     }
+                }
+
+                if (RemoveXamlDisplayerDeclaration && document.Root?.Name == XamlDisplay.XmlName)
+                {
+                    // ReSharper disable once PossibleNullReferenceException
+                    document.Root.Name = RemoveName;
+                    document.Root.RemoveAttributes();
                 }
 
                 if (FormatTextElements)
@@ -68,17 +85,26 @@ namespace ShowMeTheXAML
                 {
                     Indent = true,
                     IndentChars = Indent,
+                    NamespaceHandling = NamespaceHandling.OmitDuplicates,
                     NewLineOnAttributes = NewLineOnAttributes,
                     OmitXmlDeclaration = true,
                     NewLineHandling = NewLineHandling.Replace,
-                    NewLineChars = Environment.NewLine,
+                    NewLineChars = Environment.NewLine
                 }))
                 {
                     document.WriteTo(writer);
                 }
                 string rv = sb.ToString();
 
-                if (!IncludeIgnoredElements)
+                if (NamespacesToRemove.Any())
+                {
+                    foreach(var namespaceToRemove in NamespacesToRemove)
+                    {
+                        rv = Regex.Replace(rv, $@"\s?xmlns(\:\w+)?=\""{Regex.Escape(namespaceToRemove)}\""", "");
+                    }
+                }
+
+                if (!IncludeIgnoredElements || RemoveXamlDisplayerDeclaration)
                 {
                     //TODO: save regex
                     rv = Regex.Replace(rv, $@"</?\s*{RemoveName}\s*>", "");

@@ -3,11 +3,16 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace ShowMeTheXAML
 {
     public class XamlDisplay : ContentControl
     {
+        private static readonly string AssemblyName = typeof(XamlDisplay).Assembly.GetName().Name;
+        public static XName XmlName => XName.Get(nameof(XamlDisplay), $"clr-namespace:{nameof(ShowMeTheXAML)};assembly={AssemblyName}");
+
         static XamlDisplay()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));

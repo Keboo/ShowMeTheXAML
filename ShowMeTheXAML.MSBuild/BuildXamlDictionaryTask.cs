@@ -4,9 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+
+[assembly:InternalsVisibleTo("ShowMeTheXAML.MSBuild.Tests")]
 
 namespace ShowMeTheXAML.MSBuild
 {
@@ -34,8 +37,6 @@ namespace ShowMeTheXAML.MSBuild
         /// <returns>The location of generated code files.</returns>
         [Required]
         public string OutputPath { get; set; }
-        
-        public string RequireKeySet { get; set; }
 
         public string GeneratedFileName { get; set; }
 
@@ -44,7 +45,7 @@ namespace ShowMeTheXAML.MSBuild
         {
             _success = true;
 
-            ITaskItem generated = BuildGeneratedFile(ParseXamlFiles());
+            ITaskItem generated = BuildGeneratedFile(FromPageMarkup());
 
             GeneratedCodeFiles = new[] { generated };
 
@@ -58,73 +59,73 @@ namespace ShowMeTheXAML.MSBuild
             _cancelRequested = true;
         }
 
-        private IEnumerable<(string key, string xaml)> ParseXamlFiles()
+        private IEnumerable<(string key, string xaml)> FromPageMarkup()
         {
             Dictionary<string, DisplayerLocation> seenDisplayers = new Dictionary<string, DisplayerLocation>();
-            if (PageMarkup?.Any() == true)
+
+            foreach (ITaskItem item in PageMarkup)
             {
-                foreach (ITaskItem item in PageMarkup)
+                if (_cancelRequested) yield break;
+
+                string fullPath = item.GetMetadata("FullPath");
+                if (!string.IsNullOrEmpty(fullPath) && File.Exists(fullPath))
                 {
+                    XDocument document;
+                    try
+                    {
+                        document = XDocument.Load(fullPath, LoadOptions.SetLineInfo);
+                    }
+                    catch (Exception)
+                    {
+                        //Likely a XAML parse exception, will skip showing an error and just let the XAML compiler deal with any issues.
+                        continue;
+                    }
+
                     if (_cancelRequested) yield break;
 
-                    string fullPath = item.GetMetadata("FullPath");
-                    if (!string.IsNullOrEmpty(fullPath) && File.Exists(fullPath))
+                    foreach ((DisplayerLocation location, string xaml) in ParseXamlFile(document, fullPath))
                     {
-                        XDocument document;
-                        try
+                        if (seenDisplayers.TryGetValue(location.Key, out DisplayerLocation duplicateLocation))
                         {
-                            document = XDocument.Load(fullPath, LoadOptions.SetLineInfo);
+                            //NB: This will only show the first match, not all matches. Eh, something to improve later.
+                            LogDuplicateKeyError(location, duplicateLocation);
                         }
-                        catch (Exception)
+                        else
                         {
-                            //Likely a XML parse exception, will skip showing an error and just let the XAML compiler deal with it.
-                            continue;
+                            seenDisplayers[location.Key] = location;
                         }
-                        if (_cancelRequested) yield break;
-
-                        int displayerIndex = 1;
-                        foreach (XElement displayer in document.Descendants(XName.Get("XamlDisplay",
-                            "clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML")))
-                        {
-                            if (_cancelRequested) yield break;
-                            DisplayerLocation location = new DisplayerLocation(fullPath, displayer);
-                            if (string.IsNullOrWhiteSpace(location.Key))
-                            {
-                                if (bool.TryParse(RequireKeySet, out bool keyIsRequired) && keyIsRequired)
-                                {
-                                    LogNoKeyError(location);
-                                }
-                                else
-                                {
-                                    location.Key = item.ItemSpec.ToLowerInvariant();
-                                    if (location.Key.EndsWith(".xaml", StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        location.Key = location.Key.Substring(0, location.Key.Length - 5) + ".baml";
-                                    }
-                                    location.Key += $"_{displayerIndex++}";
-                                }
-                            }
-                            else if (seenDisplayers.TryGetValue(location.Key, out DisplayerLocation duplicateLocation))
-                            {
-                                //NB: This will only show the first match, not all matches. Eh, something to improve later.
-                                LogDuplicateKeyError(location, duplicateLocation);
-                            }
-                            else
-                            {
-                                seenDisplayers[location.Key] = location;
-                            }
-                            yield return (location.Key, GetXamlString(displayer));
-                        }
+                        yield return (location.Key, xaml);
                     }
                 }
+
+            }
+
+            void LogDuplicateKeyError(DisplayerLocation location1, DisplayerLocation location2)
+            {
+                LogError("Duplicate key specified",
+                    $"Duplicate key specified on more than one XamlDisplay element. '{location1.File}' line {location1.Line}, position {location1.Column} and '{location2.File}' line {location2.Line}, position {location2.Column}",
+                    location1.File, location1.Line, location1.Column);
+            }
+        }
+
+        internal IEnumerable<(DisplayerLocation location, string xaml)> ParseXamlFile(XDocument xamlFile, string fileLocationReference)
+        {
+            foreach (XElement displayer in xamlFile.Descendants(XName.Get("XamlDisplay",
+                "clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML")))
+            {
+                if (_cancelRequested) yield break;
+                DisplayerLocation location = new DisplayerLocation(fileLocationReference, displayer);
+                if (string.IsNullOrWhiteSpace(location.Key))
+                {
+                    LogNoKeyError(location);
+                    continue;
+                }
+
+                yield return (location, GetXamlString(displayer));
             }
 
             string GetXamlString(XElement displayer)
             {
-                foreach (var element in displayer.DescendantsAndSelf())
-                {
-                    element.Name = XName.Get(element.Name.LocalName, "");
-                }
                 var sb = new StringBuilder();
                 using (var writer = XmlWriter.Create(sb, new XmlWriterSettings
                 {
@@ -137,19 +138,12 @@ namespace ShowMeTheXAML.MSBuild
                     NewLineHandling = NewLineHandling.None
                 }))
                 {
-
-                    displayer.FirstNode.WriteTo(writer);
+                    displayer.WriteTo(writer);
                 }
 
+                //Escape quotes for storage as a C# literal string
                 string xaml = sb.ToString().Replace("\"", "\"\"");
                 return xaml;
-            }
-
-            void LogDuplicateKeyError(DisplayerLocation location1, DisplayerLocation location2)
-            {
-                LogError("Duplicate key specified",
-                    $"Duplicate key specified on more than one XamlDisplay element. '{location1.File}' line {location1.Line}, position {location1.Column} and '{location2.File}' line {location2.Line}, position {location2.Column}",
-                    location1.File, location1.Line, location1.Column);
             }
 
             void LogNoKeyError(DisplayerLocation location)
@@ -158,18 +152,18 @@ namespace ShowMeTheXAML.MSBuild
                     $"No key was specified on XamlDisplay element. A unique key is required. Line {location.Line}, position {location.Column}.",
                     location.File, location.Line, location.Column);
             }
-
-            void LogError(string subcategory, string message, string file, int line, int column)
-            {
-                _success = false;
-                //TODO: Error code
-                //TODO: help keyword
-                BuildEngine.LogErrorEvent(new BuildErrorEventArgs(subcategory, "", file, line, column, 0, 0,
-                    message, "", nameof(BuildXamlDictionaryTask)));
-            }
+        }
+        
+        private void LogError(string subcategory, string message, string file, int line, int column)
+        {
+            _success = false;
+            //TODO: Error code
+            //TODO: help keyword
+            BuildEngine.LogErrorEvent(new BuildErrorEventArgs(subcategory, "", file, line, column, 0, 0,
+                message, "", nameof(BuildXamlDictionaryTask)));
         }
 
-        private class DisplayerLocation
+        internal class DisplayerLocation
         {
             public string File { get; }
             public int Line { get; }
