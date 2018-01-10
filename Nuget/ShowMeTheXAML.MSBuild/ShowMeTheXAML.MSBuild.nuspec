@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>ShowMeTheXAML.MSBuild</id>
-    <version>0.0.0</version>
+    <version>2.0.0</version>
     <title>ShowMeTheXAML.MSBuild</title>
     <authors>Keboo</authors>
     <owners>Keboo</owners>
@@ -10,10 +10,10 @@
     <projectUrl>https://github.com/Keboo/ShowMeTheXAML</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>ShowMeTheXAML library for providing a simple way to display a control and its corresponding XAML.</description>
-    <copyright>Copyright 2017</copyright>
+    <copyright>Copyright 2018</copyright>
     <tags>ShowMeTheXAML,XAML</tags>
     <dependencies>
-      <dependency id="ShowMeTheXAML" version="[0.0.0,0.1.0)" />
+      <dependency id="ShowMeTheXAML" version="[2.0.0,2.1.0)" />
     </dependencies>
   </metadata>
 </package>
