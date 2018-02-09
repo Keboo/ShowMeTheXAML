@@ -31,12 +31,14 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <avalonedit:TextEditor Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" 
+                            <avalonedit:TextEditor Grid.Column="1"
+                                                   Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" 
                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                    Style="{StaticResource AvalonTextEditorXamlDisplay}"
                                                    DockPanel.Dock="{Binding Path=(DockPanel.Dock), RelativeSource={RelativeSource TemplatedParent}}"/>
-                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                            <ContentPresenter Grid.Column="0"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
 
                         </Grid>
