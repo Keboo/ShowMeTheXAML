@@ -8,7 +8,7 @@
   <UsingTask TaskName="ShowMeTheXAML.MSBuild.BuildXamlDictionaryTask"
              AssemblyFile="$(ShowMeTheXAMLAssemblyDirectory)\ShowMeTheXAML.MSBuild.dll"/>
 
-  <Target Name="BuildXamlDictionary" BeforeTargets="MarkupCompilePass1">
+  <Target Name="BuildXamlDictionary" BeforeTargets="BeforeCompile">
     <BuildXamlDictionaryTask 
       PageMarkup="@(Page)"
       OutputPath="$(IntermediateOutputPath)"

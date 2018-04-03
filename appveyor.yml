@@ -1,7 +1,7 @@
 # configuration for master/CI branch
 -
   environment:
-    smtx_version: 1.0.8
+    smtx_version: 1.0.10
     APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
   branches:
     only:
@@ -47,7 +47,7 @@
 #Configuration for releases
 -
   environment:
-    smtx_version: 1.0.7
+    smtx_version: 1.0.10
     APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
   branches:
     only:
