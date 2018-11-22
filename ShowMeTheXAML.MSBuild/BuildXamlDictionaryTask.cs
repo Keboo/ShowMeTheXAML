@@ -59,7 +59,7 @@ namespace ShowMeTheXAML.MSBuild
             _cancelRequested = true;
         }
 
-        private IEnumerable<(string key, string xaml)> FromPageMarkup()
+        private IEnumerable<Xaml> FromPageMarkup()
         {
             Dictionary<string, DisplayerLocation> seenDisplayers = new Dictionary<string, DisplayerLocation>();
 
@@ -83,7 +83,7 @@ namespace ShowMeTheXAML.MSBuild
 
                     if (_cancelRequested) yield break;
 
-                    foreach ((DisplayerLocation location, string xaml) in ParseXamlFile(document, fullPath))
+                    foreach (DisplayerLocation location in ParseXamlFile(document, fullPath))
                     {
                         if (seenDisplayers.TryGetValue(location.Key, out DisplayerLocation duplicateLocation))
                         {
@@ -94,7 +94,7 @@ namespace ShowMeTheXAML.MSBuild
                         {
                             seenDisplayers[location.Key] = location;
                         }
-                        yield return (location.Key, xaml);
+                        yield return new Xaml(location.Key, location.XamlData);
                     }
                 }
 
@@ -108,7 +108,7 @@ namespace ShowMeTheXAML.MSBuild
             }
         }
 
-        internal IEnumerable<(DisplayerLocation location, string xaml)> ParseXamlFile(XDocument xamlFile, string fileLocationReference)
+        internal IEnumerable<DisplayerLocation> ParseXamlFile(XDocument xamlFile, string fileLocationReference)
         {
             foreach (XElement displayer in xamlFile.Descendants(XName.Get("XamlDisplay",
                 "clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML")))
@@ -121,7 +121,8 @@ namespace ShowMeTheXAML.MSBuild
                     continue;
                 }
 
-                yield return (location, GetXamlString(displayer));
+                location.XamlData = GetXamlString(displayer);
+                yield return location;
             }
 
             string GetXamlString(XElement displayer)
@@ -169,7 +170,7 @@ namespace ShowMeTheXAML.MSBuild
             public int Line { get; }
             public int Column { get; }
             public string Key { get; set; }
-
+            public string XamlData { get; set; }
             public DisplayerLocation(string file, XElement displayer)
             {
                 File = file ?? throw new ArgumentNullException(nameof(file));
@@ -185,7 +186,7 @@ namespace ShowMeTheXAML.MSBuild
             }
         }
 
-        private ITaskItem BuildGeneratedFile(IEnumerable<(string key, string xaml)> pairs)
+        private ITaskItem BuildGeneratedFile(IEnumerable<Xaml> pairs)
         {
             string generatedFileName = string.IsNullOrWhiteSpace(GeneratedFileName)
                 ? GeneratedFileName
@@ -200,11 +201,23 @@ namespace ShowMeTheXAML
     {{
         static XamlDictionary()
         {{
-            {string.Join(Environment.NewLine, pairs.Select(p => $"XamlResolver.Set(\"{p.key}\", @\"{p.xaml}\");"))}
+            {string.Join(Environment.NewLine, pairs.Select(p => $"XamlResolver.Set(\"{p.Key}\", @\"{p.Data}\");"))}
         }}
     }}
 }}");
             return new TaskItem(generatedFilePath);
+        }
+
+        private class Xaml
+        {
+            public Xaml(string key, string xaml)
+            {
+                Key = key;
+                Data = xaml;
+            }
+
+            public string Key { get; }
+            public string Data { get; }
         }
     }
 }

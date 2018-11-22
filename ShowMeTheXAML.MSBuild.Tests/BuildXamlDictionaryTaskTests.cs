@@ -11,9 +11,9 @@ namespace ShowMeTheXAML.MSBuild.Tests
         {
             var task = new BuildXamlDictionaryTask();
 
-            (var _, string xaml) = task.ParseXamlFile(SourceFiles.MdixList, "fileRef").Single(x => x.location.Key == "list_3");
+            BuildXamlDictionaryTask.DisplayerLocation location = task.ParseXamlFile(SourceFiles.MdixList, "fileRef").Single(x => x.Key == "list_3");
             
-            Assert.AreEqual(@"", xaml);
+            Assert.AreEqual(@"", location.XamlData);
         }
     }
 }

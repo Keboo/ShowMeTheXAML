@@ -1,5 +1,5 @@
 # ShowMeTheXAML
-A WPF component making it easy to show the corresponding XAML for WPF custom styles and controls
+A WPF component making it easy to show the corresponding XAML for WPF custom styles and controls. It was built out of a need to shows the XAML for the theme library [MaterialDesignInXamlToolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit). You can see it working in the demo application for MaterialDesignInXamlToolkit.
 
 [![NuGet Status](http://img.shields.io/nuget/v/ShowMeTheXAML.svg?style=flat&label=ShowMeTheXAML)](https://www.nuget.org/packages/ShowMeTheXAML/)
 [![NuGet Status](http://img.shields.io/nuget/v/ShowMeTheXAML.MSBuild.svg?style=flat&label=ShowMeTheXAML.MSBuild)](https://www.nuget.org/packages/ShowMeTheXAML.MSBuild/)
