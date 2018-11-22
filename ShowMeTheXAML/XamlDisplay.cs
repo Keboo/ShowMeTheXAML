@@ -44,7 +44,7 @@ namespace ShowMeTheXAML
 
             void LoadFromAssembly(Assembly assembly)
             {
-                Type xamlDictionary = assembly.GetType("ShowMeTheXAML.XamlDictionary");
+                Type xamlDictionary = assembly?.GetType("ShowMeTheXAML.XamlDictionary");
                 if (xamlDictionary != null)
                 {
                     //Invoke the static constructor
