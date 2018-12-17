@@ -188,7 +188,7 @@ namespace ShowMeTheXAML.MSBuild
 
         private ITaskItem BuildGeneratedFile(IEnumerable<Xaml> pairs)
         {
-            string generatedFileName = string.IsNullOrWhiteSpace(GeneratedFileName)
+            string generatedFileName = !string.IsNullOrWhiteSpace(GeneratedFileName)
                 ? GeneratedFileName
                 : "ShowMeTheXaml_XamlDictionary.g.cs";
             string generatedFilePath = Path.Combine(OutputPath, generatedFileName);
