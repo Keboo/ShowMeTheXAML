@@ -1,0 +1,21 @@
+﻿<Window x:Class="Wpf.Framework.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf.Framework"
+        xmlns:showmethexaml="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <showmethexaml:XamlDisplay Key="Example1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Hello .NET Framework!" HorizontalAlignment="Center" VerticalAlignment="Center"
+               FontSize="40"/>
+            <Button Content="Exit" Grid.Row="1" FontSize="20" Click="ButtonExit_Click"/>
+        </Grid>
+    </showmethexaml:XamlDisplay>
+</Window>

@@ -5,6 +5,6 @@
       <CopyItems Include="$(TargetDir)$(TargetFileName)" />
       <CopyItems Include="$(TargetDir)$(TargetName).pdb" />
     </ItemGroup>
-    <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\lib\net45\%(CopyItems.RecursiveDir)" />
+    <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\lib\$(TargetFramework)\%(CopyItems.RecursiveDir)" />
   </Target>
 </Project>

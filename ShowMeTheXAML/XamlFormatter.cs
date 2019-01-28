@@ -129,7 +129,7 @@ namespace ShowMeTheXAML
                 return rv;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return xaml;
             }

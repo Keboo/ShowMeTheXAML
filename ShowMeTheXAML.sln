@@ -1,16 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeTheXAML", "ShowMeTheXAML\ShowMeTheXAML.csproj", "{26AE6FE7-8189-4075-922E-67ECA542044D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML", "ShowMeTheXAML\ShowMeTheXAML.csproj", "{26AE6FE7-8189-4075-922E-67ECA542044D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML.MSBuild", "ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.csproj", "{62C70D3F-A76A-4C63-9BD0-73916A1A8223}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowMeTheXAML.AvalonEdit", "ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.csproj", "{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML.AvalonEdit", "ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.csproj", "{4FF7C6FF-D2D5-456A-BBE6-1744BE98FEE7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD51D6C3-ECB2-410F-99BD-5BE217708A8D}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
 		Build.targets = Build.targets
 		BuildLocalNugets.ps1 = BuildLocalNugets.ps1
