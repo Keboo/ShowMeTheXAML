@@ -21,9 +21,9 @@ install:
 
 before_build:
   - ps: nuget restore ShowMeTheXAML.sln
-  - ps: nuget restore ShowMeTheXAML.Examples.sln
 
 build_script:
+  - ps: dotnet --version
   - ps: dotnet build ShowMeTheXAML.sln -c Release
   - ps: dotnet build ShowMeTheXAML.Examples.sln -c Release
 
