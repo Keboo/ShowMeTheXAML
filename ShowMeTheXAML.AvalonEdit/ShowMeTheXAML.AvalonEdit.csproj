@@ -55,6 +55,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="5.0.4">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj">
       <Project>{26ae6fe7-8189-4075-922e-67eca542044d}</Project>
       <Name>ShowMeTheXAML</Name>
