@@ -20,12 +20,11 @@ install:
   - ps: Start-Process .\dotnet-sdk-3.0.100-preview-010096-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
 
 before_build:
-  - ps: nuget restore ShowMeTheXAML.sln
+  - ps: dotnet restore ShowMeTheXAML.sln
 
 build_script:
   - ps: dotnet --version
   - ps: dotnet build ShowMeTheXAML.sln -c Release
-  - ps: dotnet build ShowMeTheXAML.Examples.sln -c Release
 
 artifacts:
 - path: '*.nupkg'
