@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-  <Import Project="..\packages\GitLink.3.1.0\build\GitLink.props" Condition="Exists('..\packages\GitLink.3.1.0\build\GitLink.props')" />
   <Import Project="..\Build.targets" />
   <PropertyGroup>
     <TargetFrameworks>net45;netcoreapp3.0</TargetFrameworks>
@@ -19,9 +18,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -33,18 +30,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\GitLink.3.1.0\build\GitLink.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitLink.3.1.0\build\GitLink.props'))" />
-    <Error Condition="!Exists('..\packages\GitLink.3.1.0\build\GitLink.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitLink.3.1.0\build\GitLink.targets'))" />
-  </Target>
-  <Import Project="..\packages\GitLink.3.1.0\build\GitLink.targets" Condition="Exists('..\packages\GitLink.3.1.0\build\GitLink.targets')" />
 </Project>
