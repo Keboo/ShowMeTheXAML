@@ -1,12 +1,12 @@
 # configuration for master/CI branch
 -
   environment:
-    smtx_version: 1.0.13
+    smtx_version: 1.1.0
     APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
   branches:
     only:
     - master
-  image: Visual Studio 2017
+  image: Visual Studio 2019
   configuration: Release
   platform: Any CPU
   init:
@@ -20,11 +20,8 @@
     account_feed: false
     project_feed: true
     disable_publish_on_pr: true
-  #Temp work around for issues with nuget server.
-  #hosts:
-  #  api.nuget.org: 93.184.221.200
-  before_build:
-  - ps: nuget restore
+  install:
+    - cinst dotnetcore-sdk --pre
   build:
     project: ShowMeTheXAML.sln
     verbosity: minimal
@@ -47,12 +44,12 @@
 #Configuration for releases
 -
   environment:
-    smtx_version: 1.0.12
+    smtx_version: 1.1.0
     APPVEYOR_BLOCK_DOTNETCORE_TESTS_AUTORUN: true
   branches:
     only:
     - release
-  image: Visual Studio 2017
+  image: Visual Studio 2019
   configuration: Release
   platform: Any CPU
   init:
@@ -68,6 +65,8 @@
     disable_publish_on_pr: true
   before_build:
   - ps: nuget restore
+  install:
+  - cinst dotnetcore-sdk --pre
   build:
     project: ShowMeTheXAML.sln
     verbosity: minimal

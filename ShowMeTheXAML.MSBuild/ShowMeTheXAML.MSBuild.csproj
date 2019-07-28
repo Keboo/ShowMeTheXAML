@@ -1,14 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.0.461" PrivateAssets="All" />
   </ItemGroup>
 
   <Target Name="CopyTargetsFile" AfterTargets="AfterBuild">
@@ -17,8 +20,13 @@
       <CopyItems Include="$(TargetDir)$(TargetFileName)" />
       <CopyItems Include="$(TargetDir)$(TargetName).pdb" />
     </ItemGroup>
+
+    <PropertyGroup>
+      <TaskOutputDirectory Condition="$(TargetFramework) == 'net472'">netframework</TaskOutputDirectory>
+      <TaskOutputDirectory Condition="$(TargetFramework) == 'netstandard2.0'">netcore</TaskOutputDirectory>
+    </PropertyGroup>
     
-    <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\%(CopyItems.RecursiveDir)" />
-    <Copy SourceFiles="@(BuildItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\build\net45\%(BuildItems.RecursiveDir)" />
+    <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\$(TaskOutputDirectory)" />
+    <Copy SourceFiles="@(BuildItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\build\%(BuildItems.RecursiveDir)" />
   </Target>
 </Project>
