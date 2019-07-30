@@ -2,21 +2,16 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <Import Project="..\Build.targets" />
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
     <OutputType>library</OutputType>
     <RootNamespace>ShowMeTheXAML.AvalonEdit</RootNamespace>
     <AssemblyName>ShowMeTheXAML.AvalonEdit</AssemblyName>
     <Title>ShowMeTheXAML.AvalonEdit</Title>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <UseWpf>True</UseWpf>
   </PropertyGroup>
-  <ItemGroup>
-    <Page Include="Themes\*.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net45'">
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -42,10 +37,5 @@
       <Project>{26ae6fe7-8189-4075-922e-67eca542044d}</Project>
       <Name>ShowMeTheXAML</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Themes\Default.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
   </ItemGroup>
 </Project>

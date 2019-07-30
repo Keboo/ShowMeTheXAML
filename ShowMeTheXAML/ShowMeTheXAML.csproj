@@ -2,15 +2,16 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <Import Project="..\Build.targets" />
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
     <OutputType>library</OutputType>
     <RootNamespace>ShowMeTheXAML</RootNamespace>
     <AssemblyName>ShowMeTheXAML</AssemblyName>
     <Title>ShowMeTheXAML</Title>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <UseWpf>True</UseWpf>
   </PropertyGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net45'">
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -22,12 +23,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">

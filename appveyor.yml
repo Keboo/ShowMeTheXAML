@@ -5,7 +5,7 @@ platform: Any CPU
 skip_tags: true
 
 environment:
-  smtx_version: 1.0.13
+  smtx_version: 1.1.0
 
 assembly_info:
   patch: false
