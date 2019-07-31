@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ShowMeTheXAMLGeneratedFileName Condition="'$(ShowMeTheXAMLGeneratedFileName)' == '' Or $(ShowMeTheXAMLGeneratedFileName) == '*Undefined*'">ShowMeTheXaml_XamlDictionary.g.cs</ShowMeTheXAMLGeneratedFileName>
-    <ShowMeTheXAMLAssemblyPath Condition="$(ShowMeTheXAMLAssemblyDirectory) == '' Or $(ShowMeTheXAMLAssemblyDirectory) == '*Undefined*'">$(MSBuildThisFileDirectory)..\..\</ShowMeTheXAMLAssemblyPath>
+    <ShowMeTheXAMLAssemblyPath Condition="$(ShowMeTheXAMLAssemblyDirectory) == '' Or $(ShowMeTheXAMLAssemblyDirectory) == '*Undefined*'">$(MSBuildThisFileDirectory)..\</ShowMeTheXAMLAssemblyPath>
     <ShowMeTheXAMLAssemblyDirectory Condition="$(MSBuildRuntimeType) == 'Core'">$(ShowMeTheXAMLAssemblyPath)netcore</ShowMeTheXAMLAssemblyDirectory>
     <ShowMeTheXAMLAssemblyDirectory Condition="$(MSBuildRuntimeType) != 'Core'">$(ShowMeTheXAMLAssemblyPath)netframework</ShowMeTheXAMLAssemblyDirectory>
   </PropertyGroup>
