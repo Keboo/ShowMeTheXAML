@@ -30,7 +30,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.0.0-netcore3p4alpha1" />
+    <PackageReference Include="AvalonEdit" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj">
