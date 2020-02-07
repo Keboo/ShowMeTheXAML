@@ -63,11 +63,11 @@ namespace ShowMeTheXAML.MSBuild
         {
             Dictionary<string, DisplayerLocation> seenDisplayers = new Dictionary<string, DisplayerLocation>();
 
-            foreach (ITaskItem item in PageMarkup)
+            foreach (ITaskItem item in PageMarkup ?? Array.Empty<ITaskItem>())
             {
                 if (_cancelRequested) yield break;
 
-                string fullPath = item.GetMetadata("FullPath");
+                string fullPath = item?.GetMetadata("FullPath");
                 if (!string.IsNullOrEmpty(fullPath) && File.Exists(fullPath))
                 {
                     XDocument document;
