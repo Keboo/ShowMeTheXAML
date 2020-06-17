@@ -12,7 +12,7 @@ namespace ShowMeTheXAML
     {
         //TODO Fully qualify XName
         private static readonly string IgnoredPropertyLocalName =
-            $"{nameof(XamlDisplay)}.{XamlDisplay.IgnoreProperty.Name}";
+            $"{nameof(XamlDisplay)}.{XamlDisplay.IgnorePropertyName}";
 
         public static IXamlFormatter Default => new XamlFormatter();
 

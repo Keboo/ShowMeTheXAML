@@ -1,22 +1,34 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
 using System.Xml;
 using System.Xml.Linq;
 
+#if __UNO__
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+#else
+using System.Windows;
+using System.Windows.Controls;
+#endif
+
 namespace ShowMeTheXAML
 {
-    public class XamlDisplay : ContentControl
+    public partial class XamlDisplay : ContentControl
     {
         private static readonly string AssemblyName = typeof(XamlDisplay).Assembly.GetName().Name;
         public static XName XmlName => XName.Get(nameof(XamlDisplay), $"clr-namespace:{nameof(ShowMeTheXAML)};assembly={AssemblyName}");
 
-        static XamlDisplay() => DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));
+        static XamlDisplay()
+        {
+#if !__UNO__
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));
+#endif
+        }
 
+        internal const string IgnorePropertyName = "Ignore";
         public static readonly DependencyProperty IgnoreProperty = DependencyProperty.RegisterAttached(
-            "Ignore", typeof(Scope), typeof(XamlDisplay), new PropertyMetadata(default(Scope)));
+            IgnorePropertyName, typeof(Scope), typeof(XamlDisplay), new PropertyMetadata(default(Scope)));
 
         public static void SetIgnore(DependencyObject element, Scope value)
             => element.SetValue(IgnoreProperty, value);
@@ -105,7 +117,11 @@ namespace ShowMeTheXAML
                 xaml = formatter.FormatXaml(xaml);
             }
             _isLoading = true;
+#if __UNO__
+            Xaml = xaml;
+#else
             SetCurrentValue(XamlProperty, xaml);
+#endif
             _isLoading = false;
         }
     }
