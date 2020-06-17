@@ -15,6 +15,9 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);__UNO__</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0'">
     <Reference Include="System.Xml.Linq" />

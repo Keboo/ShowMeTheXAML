@@ -8,6 +8,10 @@
     <IncludeBuildOutput>True</IncludeBuildOutput>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);__UNO__</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />

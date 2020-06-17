@@ -16,8 +16,12 @@ namespace ShowMeTheXAML
 {
     public partial class XamlDisplay : ContentControl
     {
+#if __UNO__
+        public static XName XmlName => XName.Get(nameof(XamlDisplay), $"using:{nameof(ShowMeTheXAML)}");
+#else
         private static readonly string AssemblyName = typeof(XamlDisplay).Assembly.GetName().Name;
         public static XName XmlName => XName.Get(nameof(XamlDisplay), $"clr-namespace:{nameof(ShowMeTheXAML)};assembly={AssemblyName}");
+#endif
 
         static XamlDisplay()
         {
@@ -45,7 +49,12 @@ namespace ShowMeTheXAML
                     LoadFromAssembly(assembly);
                 }
             }
+
+#if __ANDROID__ || __WASM__
+            LoadFromAssembly(Assembly.GetCallingAssembly());
+#else
             LoadFromAssembly(Assembly.GetEntryAssembly());
+#endif
 
             void LoadFromAssembly(Assembly assembly)
             {
@@ -58,15 +67,27 @@ namespace ShowMeTheXAML
             }
         }
 
-        public string Key
+        #region Property: UniqueKey
+        public static readonly DependencyProperty UniqueKeyProperty = DependencyProperty.Register(
+            nameof(UniqueKey),
+            typeof(string),
+            typeof(XamlDisplay),
+            new PropertyMetadata(default(string), OnUniqueKeyChanged));
+
+        public string UniqueKey
         {
-            get => _key;
-            set
+            get => (string)GetValue(UniqueKeyProperty);
+            set => SetValue(UniqueKeyProperty, value);
+        }
+
+        private static void OnUniqueKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is XamlDisplay xamlDisplay)
             {
-                _key = value;
-                ReloadXaml();
+                xamlDisplay.ReloadXaml();
             }
         }
+        #endregion
 
         public static readonly DependencyProperty XamlProperty = DependencyProperty.Register(
             nameof(Xaml), typeof(string), typeof(XamlDisplay), new PropertyMetadata(default(string), OnXamlChanged));
@@ -109,7 +130,7 @@ namespace ShowMeTheXAML
         private void ReloadXaml()
         {
             if (_isLoading) return;
-            string key = Key;
+            string key = UniqueKey;
             string xaml = XamlResolver.Resolve(key);
             IXamlFormatter formatter = Formatter ?? XamlFormatter.Default;
             if (formatter != null)
