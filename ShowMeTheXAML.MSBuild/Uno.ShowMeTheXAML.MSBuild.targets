@@ -1,0 +1,21 @@
+﻿<Project>
+  <PropertyGroup>
+    <ShowMeTheXamlGeneratedFileName Condition="'$(ShowMeTheXamlGeneratedFileName)' == '' Or $(ShowMeTheXamlGeneratedFileName) == '*Undefined*'">ShowMeTheXaml_XamlDictionary.g.cs</ShowMeTheXamlGeneratedFileName>
+  </PropertyGroup>
+
+  <UsingTask TaskName="ShowMeTheXAML.MSBuild.BuildXamlDictionaryTask"
+             AssemblyFile="$(MSBuildThisFileDirectory)/../../Tools/Uno.ShowMeTheXaml.MSBuild.dll" />
+
+  <Target Name="BuildXamlDictionary" BeforeTargets="BeforeCompile">
+    <BuildXamlDictionaryTask
+      PageMarkup="@(Page)"
+      OutputPath="$(IntermediateOutputPath)"
+      GeneratedFileName="$(ShowMeTheXamlGeneratedFileName)">
+      <Output ItemName="_BuildXamlDictionaryOutput" TaskParameter="GeneratedCodeFiles" />
+    </BuildXamlDictionaryTask>
+
+    <ItemGroup>
+      <Compile Include="@(_BuildXamlDictionaryOutput)" />
+    </ItemGroup>
+  </Target>
+</Project>
