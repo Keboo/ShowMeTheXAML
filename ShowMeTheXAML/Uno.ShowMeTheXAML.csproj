@@ -22,7 +22,7 @@
   <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0'">
     <Reference Include="System.Xml.Linq" />
 
-    <PackageReference Include="Uno.UI" Version="3.0.0-feature.styles-compat.216" />
+    <PackageReference Include="Uno.UI" Version="3.0.0-dev.618" />
   </ItemGroup>
 
   <ItemGroup>
