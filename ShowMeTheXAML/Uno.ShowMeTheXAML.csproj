@@ -3,7 +3,8 @@
   <!-- <Import Project="..\Build.targets" /> -->
   
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;xamarinios10;MonoAndroid90;monoandroid10.0;uap10.0.17763</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;xamarinios10;MonoAndroid90;monoandroid10.0;xamarinmac20;</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
     <OutputType>library</OutputType>
     <RootNamespace>ShowMeTheXAML</RootNamespace>
     <AssemblyName>Uno.ShowMeTheXAML</AssemblyName>
@@ -19,10 +20,9 @@
     <DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0'">
+  <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='xamarinmac20'">
     <Reference Include="System.Xml.Linq" />
-
-    <PackageReference Include="Uno.UI" Version="3.0.0-dev.618" />
+    <PackageReference Include="Uno.UI" Version="3.0.0-dev.660" />
   </ItemGroup>
 
   <ItemGroup>

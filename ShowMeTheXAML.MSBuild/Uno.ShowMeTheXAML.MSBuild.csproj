@@ -1,7 +1,8 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;xamarinios10;monoandroid90;monoandroid10.0;uap10.0.17763</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;xamarinios10;monoandroid90;monoandroid10.0;xamarinmac20;</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
     <PackageId>Uno.ShowMeTheXAML.MSBuild</PackageId>
     <OutputType>Library</OutputType>
     <IsTool>True</IsTool>
