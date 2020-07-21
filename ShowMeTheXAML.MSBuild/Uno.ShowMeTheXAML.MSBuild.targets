@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <UsingTask TaskName="ShowMeTheXAML.MSBuild.BuildXamlDictionaryTask"
-             AssemblyFile="$(MSBuildThisFileDirectory)/../../tools/Uno.ShowMeTheXaml.MSBuild.dll" />
+             AssemblyFile="$(MSBuildThisFileDirectory)/../../tools/Uno.ShowMeTheXAML.MSBuild.dll" />
 
   <Target Name="BuildXamlDictionary" BeforeTargets="BeforeCompile">
     <BuildXamlDictionaryTask
