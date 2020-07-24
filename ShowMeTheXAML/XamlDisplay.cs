@@ -50,11 +50,15 @@ namespace ShowMeTheXAML
                 }
             }
 
-#if __ANDROID__ || __WASM__
-            LoadFromAssembly(Assembly.GetCallingAssembly());
-#else
-            LoadFromAssembly(Assembly.GetEntryAssembly());
-#endif
+            if (Assembly.GetEntryAssembly() is Assembly entryAssembly)
+            {
+                LoadFromAssembly(entryAssembly);
+            }
+            else
+            {
+                // Assembly.GetEntryAssembly() may be null on Android and WebAssembly
+                LoadFromAssembly(Assembly.GetCallingAssembly());
+            }
 
             void LoadFromAssembly(Assembly assembly)
             {
@@ -125,7 +129,6 @@ namespace ShowMeTheXAML
         }
 
         private bool _isLoading;
-        private string _key;
 
         private void ReloadXaml()
         {
