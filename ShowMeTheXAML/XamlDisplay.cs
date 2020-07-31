@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
+using System.Runtime.InteropServices;
 
 #if __UNO__
 using Windows.UI.Xaml;
@@ -55,12 +56,15 @@ namespace ShowMeTheXAML
                 LoadFromAssembly(entryAssembly);
             }
             else
-            {
-                // Assembly.GetEntryAssembly() may be null on Android and WebAssembly
-                LoadFromAssembly(Assembly.GetCallingAssembly());
-            }
+			{
+				if (!IsMonoWebAssembly)
+				{
+					// Assembly.GetEntryAssembly() may be null on Android and WebAssembly
+					LoadFromAssembly(Assembly.GetCallingAssembly());
+				}
+			}
 
-            void LoadFromAssembly(Assembly assembly)
+			void LoadFromAssembly(Assembly assembly)
             {
                 Type xamlDictionary = assembly?.GetType("ShowMeTheXAML.XamlDictionary");
                 if (xamlDictionary != null)
@@ -71,8 +75,12 @@ namespace ShowMeTheXAML
             }
         }
 
-        #region Property: UniqueKey
-        public static readonly DependencyProperty UniqueKeyProperty = DependencyProperty.Register(
+		private static bool IsMonoWebAssembly =>
+			// Origin of the value : https://github.com/mono/mono/blob/a65055dbdf280004c56036a5d6dde6bec9e42436/mcs/class/corlib/System.Runtime.InteropServices.RuntimeInformation/RuntimeInformation.cs#L115
+			RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER"));
+
+		#region Property: UniqueKey
+		public static readonly DependencyProperty UniqueKeyProperty = DependencyProperty.Register(
             nameof(UniqueKey),
             typeof(string),
             typeof(XamlDisplay),
