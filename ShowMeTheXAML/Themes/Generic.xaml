@@ -21,8 +21,8 @@
                         <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition MinWidth="20" />
                             </Grid.ColumnDefinitions>
                             <ContentPresenter />
                             <TextBox Text="{TemplateBinding Xaml}" IsReadOnly="True" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />

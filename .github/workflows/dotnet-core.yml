@@ -56,6 +56,10 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console"
 
+    - name: Restore Local Tools
+      if: ${{ github.event_name != 'pull_request' }}
+      run: dotnet tool restore
+
     - name: Pack
       if: ${{ github.event_name != 'pull_request' }}
       run: dotnet pack -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build

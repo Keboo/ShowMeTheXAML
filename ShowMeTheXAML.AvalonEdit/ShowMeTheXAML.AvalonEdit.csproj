@@ -43,9 +43,10 @@
         <PackageReference Include="AvalonEdit" Version="6.0.0" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj">
-            <Project>{26ae6fe7-8189-4075-922e-67eca542044d}</Project>
-            <Name>ShowMeTheXAML</Name>
-        </ProjectReference>
+        <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj" />
     </ItemGroup>
+
+    <Target Name="SetPackageDependency" AfterTargets="Pack">
+        <Exec Command="nupkgwrench nuspec dependencies add --dependency-id ShowMeTheXAML --dependency-version $(Version)" />
+    </Target>
 </Project>
