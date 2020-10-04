@@ -1,0 +1,74 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ master ]
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    paths-ignore:
+    - 'README.md'
+  pull_request:
+    branches: [ master ]
+
+defaults:
+  run:
+    shell: pwsh
+
+env:
+  project: ShowMeTheXAML
+  configuration: Release
+  baseVersion: 1.1.0
+  preRelease: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Set Version
+      run: |
+        if ("${{ github.ref }}".startsWith("refs/tags/v")) {
+          $tagVersion = "${{ github.ref }}".substring(11)
+          Write-Host "::set-env name=buildVersion::$tagVersion.${{ github.run_number }}"
+          Write-Host "::set-env name=nugetVersion::$tagVersion"
+          Write-Host "::set-env name=preRelease::false"
+        } else {
+          Write-Host "::set-env name=buildVersion::${{ env.baseVersion }}.${{ github.run_number }}"
+          Write-Host "::set-env name=nugetVersion::${{ env.baseVersion }}-ci${{ github.run_number }}"
+        }
+    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+        source-url: https://nuget.pkg.github.com/keboo/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    
+    - name: Install dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build -p:Version=${{ env.buildVersion }} --configuration ${{ env.configuration }} --no-restore
+    
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console"
+
+    - name: Pack
+      if: ${{ github.event_name != 'pull_request' }}
+      run: dotnet pack -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build
+    
+    - name: Upload Artifacts
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: NuGet
+        path: ${{ github.workspace }}\${{ env.project }}\bin\${{ env.configuration }}\${{ env.project }}.${{ env.nugetVersion }}*nupkg
+
+    - name: Push NuGet
+      if: ${{ github.event_name != 'pull_request' }}
+      run: dotnet nuget push ${{ github.workspace }}\${{ env.project }}\bin\${{ env.configuration }}\${{ env.project }}.${{ env.nugetVersion }}.nupkg --source https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
