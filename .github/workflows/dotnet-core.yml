@@ -19,7 +19,6 @@ env:
   project: ShowMeTheXAML
   configuration: Release
   baseVersion: 2.0.0
-  preRelease: true
 
 jobs:
   build:
@@ -35,7 +34,6 @@ jobs:
           $tagVersion = "${{ github.ref }}".substring(11)
           Write-Host "::set-env name=buildVersion::$tagVersion.${{ github.run_number }}"
           Write-Host "::set-env name=nugetVersion::$tagVersion"
-          Write-Host "::set-env name=preRelease::false"
         } else {
           Write-Host "::set-env name=buildVersion::${{ env.baseVersion }}.${{ github.run_number }}"
           Write-Host "::set-env name=nugetVersion::${{ env.baseVersion }}-ci${{ github.run_number }}"
