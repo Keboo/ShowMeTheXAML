@@ -1,32 +1,66 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup Condition="$(TargetFramework) == 'net472'">
-    <Reference Include="Microsoft.Build" />
-    <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="Microsoft.Build.Tasks.v4.0" />
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" PrivateAssets="All" />
-  </ItemGroup>
+    <PropertyGroup>
+        <Title>ShowMeTheXAML.MSBuild</Title>
+        <Description>ShowMeTheXAML library for providing a simple way to display a control and its corresponding XAML.</Description>
+        <Copyright>Copyright 2020</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <IncludeSymbols>True</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
+        <Authors>Kevin Bost</Authors>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+    </PropertyGroup>
 
-  <Target Name="CopyTargetsFile" AfterTargets="AfterBuild">
-    <ItemGroup>
-      <BuildItems Include="$(ProjectDir)ShowMeTheXAML.MSBuild.targets" />
-      <CopyItems Include="$(TargetDir)$(TargetFileName)" />
-      <CopyItems Include="$(TargetDir)$(TargetName).pdb" />
+    <ItemGroup Condition="$(TargetFramework) == 'net472'">
+        <Reference Include="Microsoft.Build" />
+        <Reference Include="Microsoft.Build.Framework" />
+        <Reference Include="Microsoft.Build.Tasks.v4.0" />
+        <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    </ItemGroup>
+    <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
+        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" PrivateAssets="All" />
     </ItemGroup>
 
     <PropertyGroup>
-      <TaskOutputDirectory Condition="$(TargetFramework) == 'net472'">netframework</TaskOutputDirectory>
-      <TaskOutputDirectory Condition="$(TargetFramework) == 'netstandard2.0'">netcore</TaskOutputDirectory>
+        <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeInPackage</TargetsForTfmSpecificContentInPackage>
     </PropertyGroup>
-    
-    <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\$(TaskOutputDirectory)" />
-    <Copy SourceFiles="@(BuildItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\build\%(BuildItems.RecursiveDir)" />
-  </Target>
+
+    <Target Name="IncludeInPackage">
+        <PropertyGroup>
+            <TaskOutputDirectory Condition="$(TargetFramework) == 'net472'">netframework</TaskOutputDirectory>
+            <TaskOutputDirectory Condition="$(TargetFramework) == 'netstandard2.0'">netcore</TaskOutputDirectory>
+        </PropertyGroup>
+        <ItemGroup>
+            <TfmSpecificPackageFile Include="$(ProjectDir)\bin\$(Configuration)\$(TargetFramework)\*">
+                <PackagePath>build\$(TaskOutputDirectory)</PackagePath>
+            </TfmSpecificPackageFile>
+
+            <TfmSpecificPackageFile Include="$(ProjectDir)ShowMeTheXAML.MSBuild.targets" Condition="$(TargetFramework) == 'netstandard2.0'">
+                <PackagePath>build</PackagePath>
+            </TfmSpecificPackageFile>
+        </ItemGroup>
+    </Target>
+
+    <!--<Target Name="CopyTargetsFile" AfterTargets="AfterBuild">
+        <ItemGroup>
+            <BuildItems Include="$(ProjectDir)ShowMeTheXAML.MSBuild.targets" />
+            <CopyItems Include="$(TargetDir)$(TargetFileName)" />
+            <CopyItems Include="$(TargetDir)$(TargetName).pdb" />
+        </ItemGroup>
+
+        <PropertyGroup>
+            <TaskOutputDirectory Condition="$(TargetFramework) == 'net472'">netframework</TaskOutputDirectory>
+            <TaskOutputDirectory Condition="$(TargetFramework) == 'netstandard2.0'">netcore</TaskOutputDirectory>
+        </PropertyGroup>
+
+        <Copy SourceFiles="@(CopyItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\$(TaskOutputDirectory)" />
+        <Copy SourceFiles="@(BuildItems)" DestinationFolder="$(SolutionDir)Nuget\$(ProjectName)\build\%(BuildItems.RecursiveDir)" />
+    </Target>-->
 </Project>
