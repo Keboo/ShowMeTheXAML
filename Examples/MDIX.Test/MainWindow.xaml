@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel>
-        <showMeTheXaml:XamlDisplay Key="Example1">
+        <showMeTheXaml:XamlDisplay Key="Example1" x:Name="Display1">
             <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100"
                     ToolTip="Resource name: MaterialDesignRaisedLightButton">
                 _LIGHT
@@ -25,7 +25,6 @@
                 ToolTip="Resource name: MaterialDesignRaisedButton">
                 _MID
             </Button>
-            <showMeTheXaml:XamlDisplay.Xaml>Foo</showMeTheXaml:XamlDisplay.Xaml>
         </showMeTheXaml:XamlDisplay>
         <showMeTheXaml:XamlDisplay Key="Example3">
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="100"

@@ -13,23 +13,16 @@ namespace ShowMeTheXAML
         private static readonly string AssemblyName = typeof(XamlDisplay).Assembly.GetName().Name;
         public static XName XmlName => XName.Get(nameof(XamlDisplay), $"clr-namespace:{nameof(ShowMeTheXAML)};assembly={AssemblyName}");
 
-        static XamlDisplay()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));
-        }
+        static XamlDisplay() => DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));
 
         public static readonly DependencyProperty IgnoreProperty = DependencyProperty.RegisterAttached(
             "Ignore", typeof(Scope), typeof(XamlDisplay), new PropertyMetadata(default(Scope)));
 
         public static void SetIgnore(DependencyObject element, Scope value)
-        {
-            element.SetValue(IgnoreProperty, value);
-        }
+            => element.SetValue(IgnoreProperty, value);
 
         public static Scope GetIgnore(DependencyObject element)
-        {
-            return (Scope) element.GetValue(IgnoreProperty);
-        }
+            => (Scope)element.GetValue(IgnoreProperty);
 
         public static void Init(params Assembly[] assemblies)
         {
@@ -106,7 +99,7 @@ namespace ShowMeTheXAML
             if (_isLoading) return;
             string key = Key;
             string xaml = XamlResolver.Resolve(key);
-            IXamlFormatter formatter = Formatter;
+            IXamlFormatter formatter = Formatter ?? XamlFormatter.Default;
             if (formatter != null)
             {
                 xaml = formatter.FormatXaml(xaml);

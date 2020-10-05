@@ -14,6 +14,8 @@ namespace ShowMeTheXAML
         private static readonly string IgnoredPropertyLocalName =
             $"{nameof(XamlDisplay)}.{XamlDisplay.IgnoreProperty.Name}";
 
+        public static IXamlFormatter Default => new XamlFormatter();
+
         public string Indent { get; set; } = "    ";
         public bool NewLineOnAttributes { get; set; }
         public bool FormatTextElements { get; set; } = true;
