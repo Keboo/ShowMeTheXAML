@@ -48,7 +48,7 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     
     - name: Install dependencies
-      run: nuget restore
+      run: dotnet restore
     
     - name: Build
       run: dotnet build -p:Version=${{ env.buildVersion }} --configuration ${{ env.configuration }} --no-restore
