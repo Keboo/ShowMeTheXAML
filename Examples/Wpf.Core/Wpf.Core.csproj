@@ -1,25 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
 
-  <Import Project="..\..\Nuget\ShowMeTheXAML.MSBuild\build\net45\ShowMeTheXAML.MSBuild.targets" />
-
-  <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="5.0.4">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="ShowMeTheXAML">
-      <HintPath>..\..\Nuget\ShowMeTheXAML\lib\netcoreapp3.0\ShowMeTheXAML.dll</HintPath>
-    </Reference>
-    <Reference Include="ShowMeTheXAML.AvalonEdit">
-      <HintPath>..\..\Nuget\ShowMeTheXAML.AvalonEdit\lib\netcoreapp3.0\ShowMeTheXAML.AvalonEdit.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0-ci12" />
+    </ItemGroup>
 </Project>

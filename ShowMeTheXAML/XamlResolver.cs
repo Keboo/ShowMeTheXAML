@@ -4,12 +4,10 @@ namespace ShowMeTheXAML
 {
     public static class XamlResolver
     {
-        private static readonly Dictionary<string, string> XamlByKey = new Dictionary<string, string>();
+        private static Dictionary<string, string> XamlByKey { get; } = new Dictionary<string, string>();
 
         public static void Set(string key, string xaml)
-        {
-            XamlByKey[key] = xaml;
-        }
+            => XamlByKey[key] = xaml;
 
         public static string Resolve(string key)
         {
