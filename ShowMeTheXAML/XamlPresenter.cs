@@ -12,74 +12,74 @@ using System.Windows.Controls;
 
 namespace ShowMeTheXAML
 {
-	public partial class XamlPresenter : Control
-	{
-		#region Property: ReferenceKey
+    public partial class XamlPresenter : Control
+    {
+        #region Property: ReferenceKey
 
-		public static DependencyProperty ReferenceKeyProperty { get; } = DependencyProperty.Register(
-			nameof(ReferenceKey),
-			typeof(string),
-			typeof(XamlPresenter),
-			new PropertyMetadata(default, OnReferenceKeyChanged));
+        public static DependencyProperty ReferenceKeyProperty { get; } = DependencyProperty.Register(
+            nameof(ReferenceKey),
+            typeof(string),
+            typeof(XamlPresenter),
+            new PropertyMetadata(default, OnReferenceKeyChanged));
 
-		public string ReferenceKey
-		{
-			get => (string)GetValue(ReferenceKeyProperty);
-			set => SetValue(ReferenceKeyProperty, value);
-		}
+        public string ReferenceKey
+        {
+            get => (string)GetValue(ReferenceKeyProperty);
+            set => SetValue(ReferenceKeyProperty, value);
+        }
 
-		#endregion
-		#region Property: Formatter
+        #endregion
+        #region Property: Formatter
 
-		public static DependencyProperty FormatterProperty { get; } = DependencyProperty.Register(
-			nameof(Formatter),
-			typeof(IXamlFormatter),
-			typeof(XamlPresenter),
-			new PropertyMetadata(default, OnFormatterChanged));
+        public static DependencyProperty FormatterProperty { get; } = DependencyProperty.Register(
+            nameof(Formatter),
+            typeof(IXamlFormatter),
+            typeof(XamlPresenter),
+            new PropertyMetadata(default, OnFormatterChanged));
 
-		public IXamlFormatter Formatter
-		{
-			get => (IXamlFormatter)GetValue(FormatterProperty);
-			set => SetValue(FormatterProperty, value);
-		}
+        public IXamlFormatter Formatter
+        {
+            get => (IXamlFormatter)GetValue(FormatterProperty);
+            set => SetValue(FormatterProperty, value);
+        }
 
-		#endregion
-		#region Property: Xaml
+        #endregion
+        #region Property: Xaml
 
-		public static DependencyProperty XamlProperty { get; } = DependencyProperty.Register(
-			nameof(Xaml),
-			typeof(string),
-			typeof(XamlPresenter),
-			new PropertyMetadata(default));
+        public static DependencyProperty XamlProperty { get; } = DependencyProperty.Register(
+            nameof(Xaml),
+            typeof(string),
+            typeof(XamlPresenter),
+            new PropertyMetadata(default));
 
-		public string Xaml
-		{
-			get => (string)GetValue(XamlProperty);
-			set => SetValue(XamlProperty, value);
-		}
+        public string Xaml
+        {
+            get => (string)GetValue(XamlProperty);
+            set => SetValue(XamlProperty, value);
+        }
 
-		#endregion
+        #endregion
 
-		private static void OnReferenceKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => (d as XamlPresenter)?.ReloadXaml();
+        private static void OnReferenceKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => (d as XamlPresenter)?.ReloadXaml();
 
-		private static void OnFormatterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => (d as XamlPresenter)?.ReloadXaml();
+        private static void OnFormatterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => (d as XamlPresenter)?.ReloadXaml();
 
-		private void ReloadXaml()
-		{
-			string key = ReferenceKey;
-			string xaml = XamlResolver.Resolve(key);
+        private void ReloadXaml()
+        {
+            string key = ReferenceKey;
+            string xaml = XamlResolver.Resolve(key);
 
-			IXamlFormatter formatter = Formatter;
-			if (formatter != null)
-			{
-				xaml = formatter.FormatXaml(xaml);
-			}
+            IXamlFormatter formatter = Formatter;
+            if (formatter != null)
+            {
+                xaml = formatter.FormatXaml(xaml);
+            }
 
 #if __UNO__
 			Xaml = xaml;
 #else
-			SetCurrentValue(XamlProperty, xaml);
+            SetCurrentValue(XamlProperty, xaml);
 #endif
-		}
-	}
+        }
+    }
 }

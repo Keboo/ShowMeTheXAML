@@ -24,12 +24,10 @@ namespace ShowMeTheXAML
         public static XName XmlName => XName.Get(nameof(XamlDisplay), $"clr-namespace:{nameof(ShowMeTheXAML)};assembly={AssemblyName}");
 #endif
 
-        static XamlDisplay()
-        {
 #if !__UNO__
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));
+        static XamlDisplay()
+            => DefaultStyleKeyProperty.OverrideMetadata(typeof(XamlDisplay), new FrameworkPropertyMetadata(typeof(XamlDisplay)));
 #endif
-        }
 
         internal const string IgnorePropertyName = "Ignore";
         public static readonly DependencyProperty IgnoreProperty = DependencyProperty.RegisterAttached(
@@ -56,15 +54,15 @@ namespace ShowMeTheXAML
                 LoadFromAssembly(entryAssembly);
             }
             else
-			{
-				if (!IsMonoWebAssembly)
-				{
-					// Assembly.GetEntryAssembly() may be null on Android and WebAssembly
-					LoadFromAssembly(Assembly.GetCallingAssembly());
-				}
-			}
+            {
+                if (!IsMonoWebAssembly)
+                {
+                    // Assembly.GetEntryAssembly() may be null on Android and WebAssembly
+                    LoadFromAssembly(Assembly.GetCallingAssembly());
+                }
+            }
 
-			void LoadFromAssembly(Assembly assembly)
+            void LoadFromAssembly(Assembly assembly)
             {
                 Type xamlDictionary = assembly?.GetType("ShowMeTheXAML.XamlDictionary");
                 if (xamlDictionary != null)
@@ -75,12 +73,12 @@ namespace ShowMeTheXAML
             }
         }
 
-		private static bool IsMonoWebAssembly =>
-			// Origin of the value : https://github.com/mono/mono/blob/a65055dbdf280004c56036a5d6dde6bec9e42436/mcs/class/corlib/System.Runtime.InteropServices.RuntimeInformation/RuntimeInformation.cs#L115
-			RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER"));
+        private static bool IsMonoWebAssembly =>
+            // Origin of the value : https://github.com/mono/mono/blob/a65055dbdf280004c56036a5d6dde6bec9e42436/mcs/class/corlib/System.Runtime.InteropServices.RuntimeInformation/RuntimeInformation.cs#L115
+            RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER"));
 
-		#region Property: UniqueKey
-		public static readonly DependencyProperty UniqueKeyProperty = DependencyProperty.Register(
+        #region Property: UniqueKey
+        public static readonly DependencyProperty UniqueKeyProperty = DependencyProperty.Register(
             nameof(UniqueKey),
             typeof(string),
             typeof(XamlDisplay),
@@ -114,12 +112,12 @@ namespace ShowMeTheXAML
 
         public string Xaml
         {
-            get => (string) GetValue(XamlProperty);
+            get => (string)GetValue(XamlProperty);
             set => SetValue(XamlProperty, value);
         }
 
         public static readonly DependencyProperty FormatterProperty = DependencyProperty.Register(
-            nameof(Formatter), typeof(IXamlFormatter), typeof(XamlDisplay), 
+            nameof(Formatter), typeof(IXamlFormatter), typeof(XamlDisplay),
             new PropertyMetadata(default(IXamlFormatter), OnXamlConverterChanged));
 
         private static void OnXamlConverterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -132,7 +130,7 @@ namespace ShowMeTheXAML
 
         public IXamlFormatter Formatter
         {
-            get => (IXamlFormatter) GetValue(FormatterProperty);
+            get => (IXamlFormatter)GetValue(FormatterProperty);
             set => SetValue(FormatterProperty, value);
         }
 
