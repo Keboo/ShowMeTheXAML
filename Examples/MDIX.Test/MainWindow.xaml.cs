@@ -10,7 +10,6 @@ namespace MDIX.Test
         public MainWindow()
         {
             InitializeComponent();
-            Display1.Formatter = new IndentedXamlFormatter()
         }
     }
 }
