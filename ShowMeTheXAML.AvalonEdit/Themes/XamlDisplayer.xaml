@@ -4,7 +4,9 @@
     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" 
     xmlns:avalonEdit="clr-namespace:ShowMeTheXAML.AvalonEdit">
 
-    <Style x:Key="AvalonTextEditorXamlDisplay" TargetType="avalonedit:TextEditor" BasedOn="{StaticResource {x:Type avalonedit:TextEditor}}">
+    <Style x:Key="AvalonTextEditorXamlDisplay"
+           TargetType="avalonedit:TextEditor"
+           BasedOn="{StaticResource {x:Type avalonedit:TextEditor}}">
         <Setter Property="SyntaxHighlighting" Value="XML" />
         <Setter Property="FontFamily" Value="Consolas" />
         <Setter Property="IsReadOnly" Value="True" />
@@ -12,7 +14,9 @@
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
     </Style>
 
-    <Style x:Key="AvalonEditXamlDisplay" TargetType="showMeTheXaml:XamlDisplay" BasedOn="{StaticResource {x:Type showMeTheXaml:XamlDisplay}}">
+    <Style x:Key="AvalonEditXamlDisplay"
+           TargetType="showMeTheXaml:XamlDisplay"
+           BasedOn="{StaticResource {x:Type showMeTheXaml:XamlDisplay}}">
         <Style.Resources>
             <avalonEdit:TextDocumentValueConverter x:Key="TextDocumentValueConverter"/>
         </Style.Resources>
@@ -24,9 +28,10 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <avalonedit:TextEditor Grid.Column="1" Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Style="{StaticResource AvalonTextEditorXamlDisplay}" DockPanel.Dock="{Binding Path=(DockPanel.Dock), RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <avalonedit:TextEditor Grid.Column="2" Document="{Binding Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Style="{StaticResource AvalonTextEditorXamlDisplay}" DockPanel.Dock="{Binding Path=(DockPanel.Dock), RelativeSource={RelativeSource TemplatedParent}}"/>
                             <ContentPresenter Grid.Column="0" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
 
                         </Grid>

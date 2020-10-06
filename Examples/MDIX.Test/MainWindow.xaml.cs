@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using ShowMeTheXAML;
 
 namespace MDIX.Test
 {
@@ -11,7 +10,6 @@ namespace MDIX.Test
         public MainWindow()
         {
             InitializeComponent();
-            Display1.Formatter = new IndentedXamlFormatter()
         }
     }
 }

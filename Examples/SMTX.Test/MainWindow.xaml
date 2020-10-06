@@ -8,7 +8,7 @@
         Title="MainWindow" Height="350" Width="525">
     <StackPanel Margin="10">
         
-        <showMeTheXaml:XamlDisplay Key="Button" VerticalAlignment="Center">
+        <showMeTheXaml:XamlDisplay Key="Button" VerticalAlignment="Center" Margin="0,20">
             <Button Content="Some Button" />
         </showMeTheXaml:XamlDisplay>
         
