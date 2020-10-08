@@ -64,7 +64,7 @@ jobs:
       run: dotnet tool restore
 
     - name: Pack
-      run: dotnet pack -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build ShowMeTheXAML.sln
+      run: nuget pack -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build ShowMeTheXAML.sln
     
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
