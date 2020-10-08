@@ -48,7 +48,7 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     
     - name: Install dependencies
-      run: msbuild restore ShowMeTheXAML.sln
+      run: nuget restore ShowMeTheXAML.sln
 
     - name: setup-xamarin
       uses: maxim-lobanov/setup-xamarin@v1.1
