@@ -50,6 +50,9 @@ jobs:
     - name: Install dependencies
       run: nuget restore ShowMeTheXAML.sln
 
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
     - name: Build
       run: msbuild -p:Version=${{ env.buildVersion }} -p:configuration=${{ env.configuration }} ShowMeTheXAML.sln
     
