@@ -2,11 +2,14 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+        <TargetFrameworks Condition="'$(OS)' != 'Windows_NT' And '$(Configuration)' == 'Release'">xamarinios10;xamarinios10;monoandroid90;monoandroid10.0;xamarinmac20</TargetFrameworks>
+        <TargetFrameworks Condition="'$(OS)' == 'Windows_NT' And '$(Configuration)' == 'Release'">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
     </PropertyGroup>
 
     <PropertyGroup>
+        <PackageId>ShowMeTheXAML.MSBuild</PackageId>
         <Title>ShowMeTheXAML.MSBuild</Title>
         <Description>ShowMeTheXAML library for providing a simple way to display a control and its corresponding XAML.</Description>
         <Copyright>Copyright 2020</Copyright>
@@ -29,24 +32,33 @@
         <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" PrivateAssets="All" />
     </ItemGroup>
 
+
+    <ItemGroup>
+        <_AllTargetFrameworks Include="$(TargetFrameworks)" />
+        <None Include="ShowMeTheXAML.MSBuild.targets" Pack="True" PackagePath="@(_AllTargetFrameworks->'build/%(Identity)/$(PackageId).targets')" />
+    </ItemGroup>
+
+    
     <PropertyGroup>
         <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeInPackage</TargetsForTfmSpecificContentInPackage>
     </PropertyGroup>
-
     <Target Name="IncludeInPackage">
         <PropertyGroup>
+            <EmptyFile>$(ProjectDir)$(IntermediateOutputPath)_._</EmptyFile>
             <TaskOutputDirectory Condition="$(TargetFramework) == 'net472'">netframework</TaskOutputDirectory>
             <TaskOutputDirectory Condition="$(TargetFramework) == 'netstandard2.0'">netcore</TaskOutputDirectory>
         </PropertyGroup>
+
+        <WriteLinestoFile File="$(EmptyFile)" />
         <ItemGroup>
             <TfmSpecificPackageFile Include="$(ProjectDir)\bin\$(Configuration)\$(TargetFramework)\*">
-                <PackagePath>build\$(TaskOutputDirectory)</PackagePath>
+                <PackagePath>tools\$(TaskOutputDirectory)</PackagePath>
             </TfmSpecificPackageFile>
-
-            <TfmSpecificPackageFile Include="$(ProjectDir)ShowMeTheXAML.MSBuild.targets" Condition="$(TargetFramework) == 'netstandard2.0'">
-                <PackagePath>build</PackagePath>
+            <TfmSpecificPackageFile Include="$(EmptyFile)">
+                <PackagePath>lib\$(TargetFramework)</PackagePath>
             </TfmSpecificPackageFile>
         </ItemGroup>
+        
     </Target>
 
     <Target Name="SetPackageDependency" AfterTargets="Pack">
