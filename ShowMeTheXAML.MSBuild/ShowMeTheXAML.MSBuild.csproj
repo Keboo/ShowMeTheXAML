@@ -30,6 +30,7 @@
 
     <ItemGroup Condition="$(TargetFramework) != 'net472'">
         <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" PrivateAssets="All" />
+        <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
         <Reference Include="System.Xml" />
         <Reference Include="System.Xml.Linq" />
     </ItemGroup>
