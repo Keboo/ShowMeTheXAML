@@ -108,8 +108,8 @@ jobs:
         xcode-version: 11.x # set the latest available Xcode 11
 
     - name: Install dependencies
-      run: dotnet restore Uno.ShowMeTheXAML.sln
+      run: nuget restore Uno.ShowMeTheXAML.sln
     
     - name: Build
-      run: dotnet build -p:Version=${{ env.buildVersion }} --configuration ${{ env.configuration }} --no-restore Uno.ShowMeTheXAML.sln
+      run: msbuild -p:Version=${{ env.buildVersion }} -p:configuration=${{ env.configuration }} Uno.ShowMeTheXAML.sln
     
