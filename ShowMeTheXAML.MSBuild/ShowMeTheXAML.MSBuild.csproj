@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
-        <TargetFrameworks Condition="'$(OS)' != 'Windows_NT' And '$(Configuration)' == 'Release'">xamarinios10;xamarinios10;monoandroid90;monoandroid10.0;xamarinmac20</TargetFrameworks>
+        <TargetFrameworks>$(TargetFrameworks);xamarinios10;xamarinios10;monoandroid90;monoandroid10.0;xamarinmac20</TargetFrameworks>
         <TargetFrameworks Condition="'$(OS)' == 'Windows_NT' And '$(Configuration)' == 'Release'">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
@@ -27,9 +27,11 @@
         <Reference Include="Microsoft.Build.Tasks.v4.0" />
         <Reference Include="Microsoft.Build.Utilities.v4.0" />
     </ItemGroup>
-    
-    <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
+
+    <ItemGroup Condition="$(TargetFramework) != 'net472'">
         <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" PrivateAssets="All" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml.Linq" />
     </ItemGroup>
 
 
