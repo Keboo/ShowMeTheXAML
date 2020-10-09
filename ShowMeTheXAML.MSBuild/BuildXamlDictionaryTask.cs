@@ -108,7 +108,7 @@ namespace ShowMeTheXAML.MSBuild
             }
         }
 
-        internal IEnumerable<DisplayerLocation> ParseXamlFile(XDocument xamlFile, string fileLocationReference)
+        public IEnumerable<DisplayerLocation> ParseXamlFile(XDocument xamlFile, string fileLocationReference)
         {
             var xamlDisplayXName =
 #if __UNO__
@@ -170,7 +170,7 @@ namespace ShowMeTheXAML.MSBuild
                 message, "", nameof(BuildXamlDictionaryTask)));
         }
 
-        internal class DisplayerLocation
+        public class DisplayerLocation
         {
             public string File { get; }
             public int Line { get; }
