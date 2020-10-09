@@ -1,9 +1,8 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
-        <TargetFrameworks>$(TargetFrameworks);xamarinios10;xamarinios10;monoandroid90;monoandroid10.0;xamarinmac20</TargetFrameworks>
-        <TargetFrameworks Condition="'$(OS)' == 'Windows_NT' And '$(Configuration)' == 'Release'">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
+        <TargetFrameworks>net472;netstandard2.0;xamarinios10;monoandroid90;monoandroid10.0;xamarinmac20</TargetFrameworks>
+        <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
     </PropertyGroup>
