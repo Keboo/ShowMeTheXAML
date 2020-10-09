@@ -55,7 +55,7 @@
 
         <WriteLinestoFile File="$(EmptyFile)" />
         <ItemGroup>
-            <TfmSpecificPackageFile Include="$(ProjectDir)\bin\$(Configuration)\$(TargetFramework)\*"
+            <TfmSpecificPackageFile Include="$(ProjectDir)bin\$(Configuration)\$(TargetFramework)\*"
                                     Condition="$(TargetFramework) == 'net472' Or $(TargetFramework) == 'netstandard2.0'">
                 <PackagePath>tools\$(TaskOutputDirectory)</PackagePath>
             </TfmSpecificPackageFile>
@@ -67,6 +67,6 @@
     </Target>
 
     <Target Name="SetPackageDependency" AfterTargets="Pack">
-        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add &quot;$(ProjectDir)bin\$(Configuration)\&quot; --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)"/>
+        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add &quot;$(SolutionDir)$(ProjectName)\bin\$(Configuration)\&quot; --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)"/>
     </Target>
 </Project>
