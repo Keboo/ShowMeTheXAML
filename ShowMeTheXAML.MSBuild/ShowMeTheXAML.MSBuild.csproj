@@ -22,14 +22,14 @@
         <IncludeBuildOutput>false</IncludeBuildOutput>
     </PropertyGroup>
 
-    <ItemGroup Condition="$(TargetFramework) == 'net472'">
+    <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
         <Reference Include="Microsoft.Build" />
         <Reference Include="Microsoft.Build.Framework" />
         <Reference Include="Microsoft.Build.Tasks.v4.0" />
         <Reference Include="Microsoft.Build.Utilities.v4.0" />
     </ItemGroup>
 
-    <ItemGroup Condition="$(TargetFramework) != 'net472'">
+    <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
         <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" PrivateAssets="All" />
         <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
         <Reference Include="System.Xml" />
