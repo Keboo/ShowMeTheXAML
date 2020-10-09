@@ -67,6 +67,7 @@
     </Target>
 
     <Target Name="SetPackageDependency" AfterTargets="Pack">
-        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)" />
+        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)"
+              WorkingDirectory="$(ProjectDir)bin\$(Configuration)"/>
     </Target>
 </Project>
