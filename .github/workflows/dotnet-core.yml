@@ -66,7 +66,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: NuGet
-        path: ${{ github.workspace }}\${{ env.project }}*\bin\${{ env.configuration }}\${{ env.project }}*.${{ env.nugetVersion }}.nupkg
+        path: ${{ github.workspace }}\**\${{ env.project }}*.${{ env.nugetVersion }}.nupkg
 
     - name: Push NuGet
       if: ${{ github.event_name != 'pull_request' }}
