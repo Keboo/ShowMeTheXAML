@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Xml;
 using System.Xml.Linq;
 using System.Runtime.InteropServices;
 
@@ -17,12 +16,9 @@ namespace ShowMeTheXAML
 {
     public partial class XamlDisplay : ContentControl
     {
-#if __UNO__
-        public static XName XmlName => XName.Get(nameof(XamlDisplay), $"using:{nameof(ShowMeTheXAML)}");
-#else
         private static readonly string AssemblyName = typeof(XamlDisplay).Assembly.GetName().Name;
         public static XName XmlName => XName.Get(nameof(XamlDisplay), $"clr-namespace:{nameof(ShowMeTheXAML)};assembly={AssemblyName}");
-#endif
+        public static XName UnoXmlName => XName.Get(nameof(XamlDisplay), $"using:{nameof(ShowMeTheXAML)}");
 
 #if !__UNO__
         static XamlDisplay()

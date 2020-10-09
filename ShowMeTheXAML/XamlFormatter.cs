@@ -63,7 +63,9 @@ namespace ShowMeTheXAML
                     }
                 }
 
-                if (RemoveXamlDisplayerDeclaration && document.Root?.Name == XamlDisplay.XmlName)
+                if (RemoveXamlDisplayerDeclaration &&
+                    (document.Root?.Name == XamlDisplay.XmlName ||
+                     document.Root?.Name == XamlDisplay.UnoXmlName))
                 {
                     // ReSharper disable once PossibleNullReferenceException
                     document.Root.Name = RemoveName;

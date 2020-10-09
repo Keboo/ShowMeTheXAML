@@ -44,4 +44,8 @@
         <Reference Include="PresentationCore" />
         <Reference Include="PresentationFramework" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Uno.UI" Version="3.0.17" />
+    </ItemGroup>
 </Project>
