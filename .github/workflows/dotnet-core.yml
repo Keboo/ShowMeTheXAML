@@ -53,19 +53,16 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
+    - name: Restore Local Tools
+      if: ${{ github.event_name != 'pull_request' }}
+      run: dotnet tool restore
+
     - name: Build
       run: msbuild -p:Version=${{ env.buildVersion }} -p:configuration=${{ env.configuration }} ShowMeTheXAML.sln
     
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console" ShowMeTheXAML.sln
 
-    - name: Restore Local Tools
-      if: ${{ github.event_name != 'pull_request' }}
-      run: dotnet tool restore
-
-    - name: Pack
-      run: nuget pack ShowMeTheXAML.MSBuild\ShowMeTheXAML.MSBuild.csproj -symbols -properties "Configuration=Release;PackageVersion=${{ env.nugetVersion }}"
-    
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:

@@ -5,6 +5,8 @@
         <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -53,7 +55,8 @@
 
         <WriteLinestoFile File="$(EmptyFile)" />
         <ItemGroup>
-            <TfmSpecificPackageFile Include="$(ProjectDir)\bin\$(Configuration)\$(TargetFramework)\*">
+            <TfmSpecificPackageFile Include="$(ProjectDir)\bin\$(Configuration)\$(TargetFramework)\*"
+                                    Condition="$(TargetFramework) == 'net472' Or $(TargetFramework) == 'netstandard2.0'">
                 <PackagePath>tools\$(TaskOutputDirectory)</PackagePath>
             </TfmSpecificPackageFile>
             <TfmSpecificPackageFile Include="$(EmptyFile)">
