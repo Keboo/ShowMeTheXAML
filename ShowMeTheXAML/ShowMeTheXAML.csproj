@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
     <PropertyGroup>
-        <TargetFrameworks>net472;netstandard2.0;xamarinios10;MonoAndroid90;monoandroid10.0;xamarinmac20;</TargetFrameworks>
+        <TargetFrameworks>net472;netcoreapp3.1;netstandard2.0;xamarinios10;MonoAndroid90;monoandroid10.0;xamarinmac20;</TargetFrameworks>
         <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.17763</TargetFrameworks>
         <OutputType>library</OutputType>
         <RootNamespace>ShowMeTheXAML</RootNamespace>
@@ -21,6 +21,10 @@
         <Authors>Kevin Bost</Authors>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+        <UseWpf>true</UseWpf>
+    </PropertyGroup>
+
     <PropertyGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='xamarinmac20' or '$(TargetFramework)'=='uap10.0.17763'">
         <DefineConstants>$(DefineConstants);__UNO__</DefineConstants>
     </PropertyGroup>
@@ -28,24 +32,14 @@
         <Reference Include="System.Xml.Linq" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='xamarinmac20'">
-        <PackageReference Include="Uno.UI" Version="3.0.0-dev.966" />
+        <PackageReference Include="Uno.UI" Version="3.0.17" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
-        <Reference Include="System" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="System.Core" />
         <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Net.Http" />
         <Reference Include="System.Xaml" />
         <Reference Include="WindowsBase" />
         <Reference Include="PresentationCore" />
         <Reference Include="PresentationFramework" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Uno.UI" Version="3.0.17" />
     </ItemGroup>
 </Project>
