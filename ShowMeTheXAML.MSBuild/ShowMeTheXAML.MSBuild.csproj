@@ -7,6 +7,7 @@
         <DebugType>full</DebugType>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <IncludeBuildOutput>false</IncludeBuildOutput>
+        <LangVersion>8.0</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>
