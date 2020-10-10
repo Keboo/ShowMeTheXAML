@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
+        <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
         <OutputType>library</OutputType>
         <RootNamespace>ShowMeTheXAML.AvalonEdit</RootNamespace>
         <AssemblyName>ShowMeTheXAML.AvalonEdit</AssemblyName>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <UseWpf>True</UseWpf>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -22,13 +23,8 @@
     </PropertyGroup>
     
     <ItemGroup Condition="$(TargetFramework) == 'net472'">
-        <Reference Include="System" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="System.Core" />
         <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Net.Http" />
+        <Reference Include="System.Xaml" />
         <Reference Include="WindowsBase" />
         <Reference Include="PresentationCore" />
         <Reference Include="PresentationFramework" />
@@ -40,13 +36,13 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="AvalonEdit" Version="6.0.0" />
+        <PackageReference Include="AvalonEdit" Version="6.0.1" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj" />
     </ItemGroup>
 
     <Target Name="SetPackageDependency" AfterTargets="Pack">
-        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)" />
+        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add $(SolutionDir)$(PackageId)\bin\$(Configuration)\ --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)" />
     </Target>
 </Project>

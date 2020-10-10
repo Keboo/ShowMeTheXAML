@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML", "ShowMeTheX
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML.Tests", "ShowMeTheXAML.Tests\ShowMeTheXAML.Tests.csproj", "{CC64FFB3-C299-4D41-B7BD-4EF2795C9869}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowMeTheXAML.AvalonEdit", "ShowMeTheXAML.AvalonEdit\ShowMeTheXAML.AvalonEdit.csproj", "{0E7EE72C-B6B0-44F7-BBEF-368B0E17ADDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{CC64FFB3-C299-4D41-B7BD-4EF2795C9869}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC64FFB3-C299-4D41-B7BD-4EF2795C9869}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC64FFB3-C299-4D41-B7BD-4EF2795C9869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E7EE72C-B6B0-44F7-BBEF-368B0E17ADDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E7EE72C-B6B0-44F7-BBEF-368B0E17ADDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E7EE72C-B6B0-44F7-BBEF-368B0E17ADDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E7EE72C-B6B0-44F7-BBEF-368B0E17ADDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
