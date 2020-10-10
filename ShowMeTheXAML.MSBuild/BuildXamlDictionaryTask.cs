@@ -201,15 +201,16 @@ namespace ShowMeTheXAML.MSBuild
         {
             string generatedFileName = !string.IsNullOrWhiteSpace(GeneratedFileName)
                 ? GeneratedFileName
-                : "ShowMeTheXaml_XamlDictionary.g.vb";
-            string generatedFilePath = Path.Combine(OutputPath, generatedFileName);
+                : "ShowMeTheXaml_XamlDictionary";
+            string generatedFilePath = Path.ChangeExtension(Path.Combine(OutputPath, generatedFileName), ".g.vb");
             File.WriteAllText(generatedFilePath, $@"
 Imports System
+Imports ShowMeTheXAML
 
 Namespace ShowMeTheXAML
     Public Module XamlDictionary
-        Shared Sub New()
-            {string.Join(Environment.NewLine, pairs.Select(p => $"XamlResolver.[Set](\"{p.Key}\", @\"{p.Data}\")"))}
+        Sub New()
+            {string.Join(Environment.NewLine, pairs.Select(p => $"XamlResolver.[Set](\"{p.Key}\", \"{p.Data}\")"))}
         End Sub
     End Module
 End Namespace");
@@ -220,8 +221,8 @@ End Namespace");
         {
             string generatedFileName = !string.IsNullOrWhiteSpace(GeneratedFileName)
                 ? GeneratedFileName
-                : "ShowMeTheXaml_XamlDictionary.g.cs";
-            string generatedFilePath = Path.Combine(OutputPath, generatedFileName);
+                : "ShowMeTheXaml_XamlDictionary";
+            string generatedFilePath = Path.ChangeExtension(Path.Combine(OutputPath, generatedFileName), ".g.cs");
             File.WriteAllText(generatedFilePath, $@"
 using System.Collections.Generic;
 
