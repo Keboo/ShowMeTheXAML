@@ -6,7 +6,7 @@
         xmlns:showmethexaml="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <showmethexaml:XamlDisplay Key="Example1">
+    <showmethexaml:XamlDisplay UniqueKey="Example1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="9*"/>

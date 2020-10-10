@@ -14,26 +14,26 @@
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel>
-        <showMeTheXaml:XamlDisplay Key="Example1" x:Name="Display1">
+        <showMeTheXaml:XamlDisplay UniqueKey="Example1" x:Name="Display1">
             <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100"
                     ToolTip="Resource name: MaterialDesignRaisedLightButton">
                 _LIGHT
             </Button>
         </showMeTheXaml:XamlDisplay>
-        <showMeTheXaml:XamlDisplay Key="Example2">
+        <showMeTheXaml:XamlDisplay UniqueKey="Example2">
             <Button Style="{StaticResource MaterialDesignRaisedButton}" Width="100"
                 ToolTip="Resource name: MaterialDesignRaisedButton">
                 _MID
             </Button>
         </showMeTheXaml:XamlDisplay>
-        <showMeTheXaml:XamlDisplay Key="Example3">
+        <showMeTheXaml:XamlDisplay UniqueKey="Example3">
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="100"
                     ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
                 _DARK
             </Button>
         </showMeTheXaml:XamlDisplay>
 
-        <showMeTheXaml:XamlDisplay Key="Example4">
+        <showMeTheXaml:XamlDisplay UniqueKey="Example4">
             <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="100"
                     ToolTip="Resource name: MaterialDesignRaisedAccentButton">
                 ACCENT

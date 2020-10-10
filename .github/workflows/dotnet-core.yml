@@ -8,6 +8,7 @@ on:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
     paths-ignore:
     - 'README.md'
+    - 'Examples/**'
   pull_request:
     branches: [ master ]
 
@@ -21,7 +22,7 @@ env:
   baseVersion: 2.0.0
 
 jobs:
-  build:
+  build-main:
     runs-on: windows-latest
 
     steps:
@@ -48,29 +49,65 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     
     - name: Install dependencies
-      run: dotnet restore
-    
-    - name: Build
-      run: dotnet build -p:Version=${{ env.buildVersion }} --configuration ${{ env.configuration }} --no-restore
-    
-    - name: Test
-      run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console"
+      run: nuget restore ShowMeTheXAML.sln
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Restore Local Tools
-      if: ${{ github.event_name != 'pull_request' }}
       run: dotnet tool restore
 
-    - name: Pack
-      if: ${{ github.event_name != 'pull_request' }}
-      run: dotnet pack -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build
+    - name: Build
+      run: msbuild -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} -p:configuration=${{ env.configuration }} ShowMeTheXAML.sln
     
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console" ShowMeTheXAML.sln
+
     - name: Upload Artifacts
-      if: ${{ github.event_name != 'pull_request' }}
       uses: actions/upload-artifact@v2
       with:
         name: NuGet
-        path: ${{ github.workspace }}\${{ env.project }}*\bin\${{ env.configuration }}\${{ env.project }}*.${{ env.nugetVersion }}.nupkg
+        path: ${{ github.workspace }}\**\*.nupkg
 
     - name: Push NuGet
       if: ${{ github.event_name != 'pull_request' }}
       run: dotnet nuget push ${{ github.workspace }}\${{ env.project }}*\bin\${{ env.configuration }}\${{ env.project }}*.${{ env.nugetVersion }}.nupkg --source https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+
+#  build-uno:
+#    runs-on: macos-latest
+#
+#    steps:
+#    - name: Checkout
+#      uses: actions/checkout@v2
+#    
+#    - name: Set Version
+#      run: |
+#        if ("${{ github.ref }}".startsWith("refs/tags/v")) {
+#          $tagVersion = "${{ github.ref }}".substring(11)
+#          Write-Host "::set-env name=buildVersion::$tagVersion.${{ github.run_number }}"
+#          Write-Host "::set-env name=nugetVersion::$tagVersion"
+#        } else {
+#          Write-Host "::set-env name=buildVersion::${{ env.baseVersion }}.${{ github.run_number }}"
+#          Write-Host "::set-env name=nugetVersion::${{ env.baseVersion }}-ci${{ github.run_number }}"
+#        }
+#    
+#    - name: Setup .NET Core
+#      uses: actions/setup-dotnet@v1
+#      with:
+#        dotnet-version: 3.1.101
+#
+#    - name: setup-xamarin
+#      uses: maxim-lobanov/setup-xamarin@v1.1
+#      with:
+#        mono-version: 6.6 # specify version in '<major>.<minor>' format
+#        xamarin-ios-version: 13 # specify version in '<major>' format
+#        xamarin-mac-version: latest # specify 'latest' keyword to pick up the latest available version
+#        xamarin-android-version: 10.1.3.7 # specify full version; it is not recomended option because your pipeline can be broken suddenly in future
+#        xcode-version: 11.x # set the latest available Xcode 11
+#
+#    - name: Install dependencies
+#      run: nuget restore ShowMeTheXAML.sln
+#    
+#    - name: Build
+#      run: msbuild -p:Version=${{ env.buildVersion }} -p:configuration=${{ env.configuration }} ShowMeTheXAML.sln
+    

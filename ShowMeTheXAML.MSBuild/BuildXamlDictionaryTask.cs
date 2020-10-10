@@ -85,16 +85,16 @@ namespace ShowMeTheXAML.MSBuild
 
                     foreach (DisplayerLocation location in ParseXamlFile(document, fullPath))
                     {
-                        if (seenDisplayers.TryGetValue(location.Key, out DisplayerLocation duplicateLocation))
+                        if (seenDisplayers.TryGetValue(location.UniqueKey, out DisplayerLocation duplicateLocation))
                         {
                             //NB: This will only show the first match, not all matches. Eh, something to improve later.
                             LogDuplicateKeyError(location, duplicateLocation);
                         }
                         else
                         {
-                            seenDisplayers[location.Key] = location;
+                            seenDisplayers[location.UniqueKey] = location;
                         }
-                        yield return new Xaml(location.Key, location.XamlData);
+                        yield return new Xaml(location.UniqueKey, location.XamlData);
                     }
                 }
 
@@ -108,14 +108,20 @@ namespace ShowMeTheXAML.MSBuild
             }
         }
 
-        internal IEnumerable<DisplayerLocation> ParseXamlFile(XDocument xamlFile, string fileLocationReference)
+        public IEnumerable<DisplayerLocation> ParseXamlFile(XDocument xamlFile, string fileLocationReference)
         {
-            foreach (XElement displayer in xamlFile.Descendants(XName.Get("XamlDisplay",
-                "clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML")))
+            var xamlDisplayXName =
+#if __UNO__
+                XName.Get("XamlDisplay", "using:ShowMeTheXAML");
+#else
+                XName.Get("XamlDisplay", "clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML");
+#endif
+
+            foreach (XElement displayer in xamlFile.Descendants(xamlDisplayXName))
             {
                 if (_cancelRequested) yield break;
                 DisplayerLocation location = new DisplayerLocation(fileLocationReference, displayer);
-                if (string.IsNullOrWhiteSpace(location.Key))
+                if (string.IsNullOrWhiteSpace(location.UniqueKey))
                 {
                     LogNoKeyError(location);
                     continue;
@@ -164,19 +170,19 @@ namespace ShowMeTheXAML.MSBuild
                 message, "", nameof(BuildXamlDictionaryTask)));
         }
 
-        internal class DisplayerLocation
+        public class DisplayerLocation
         {
             public string File { get; }
             public int Line { get; }
             public int Column { get; }
-            public string Key { get; set; }
+            public string UniqueKey { get; set; }
             public string XamlData { get; set; }
             public DisplayerLocation(string file, XElement displayer)
             {
                 File = file ?? throw new ArgumentNullException(nameof(file));
                 if (displayer == null) throw new ArgumentNullException(nameof(displayer));
 
-                Key = displayer.Attribute("Key")?.Value;
+                UniqueKey = displayer.Attribute("UniqueKey")?.Value;
                 IXmlLineInfo lineInfo = displayer;
                 if (lineInfo.HasLineInfo())
                 {

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <Import Project="..\Build.targets" />
+  <PropertyGroup>
+    <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
+    <OutputType>library</OutputType>
+    <RootNamespace>ShowMeTheXAML.AvalonEdit</RootNamespace>
+    <AssemblyName>ShowMeTheXAML.AvalonEdit</AssemblyName>
+    <Title>ShowMeTheXAML.AvalonEdit</Title>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <UseWpf>True</UseWpf>
+  </PropertyGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj">
+      <Project>{26ae6fe7-8189-4075-922e-67eca542044d}</Project>
+      <Name>ShowMeTheXAML</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

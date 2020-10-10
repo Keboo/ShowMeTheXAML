@@ -1,22 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <ShowMeTheXAMLGeneratedFileName Condition="'$(ShowMeTheXAMLGeneratedFileName)' == '' Or $(ShowMeTheXAMLGeneratedFileName) == '*Undefined*'">ShowMeTheXaml_XamlDictionary.g.cs</ShowMeTheXAMLGeneratedFileName>
-    <ShowMeTheXAMLAssemblyPath Condition="$(ShowMeTheXAMLAssemblyDirectory) == '' Or $(ShowMeTheXAMLAssemblyDirectory) == '*Undefined*'">$(MSBuildThisFileDirectory)</ShowMeTheXAMLAssemblyPath>
-    <ShowMeTheXAMLAssemblyDirectory Condition="$(MSBuildRuntimeType) == 'Core'">$(ShowMeTheXAMLAssemblyPath)netcore</ShowMeTheXAMLAssemblyDirectory>
-    <ShowMeTheXAMLAssemblyDirectory Condition="$(MSBuildRuntimeType) != 'Core'">$(ShowMeTheXAMLAssemblyPath)netframework</ShowMeTheXAMLAssemblyDirectory>
-  </PropertyGroup>
-  
-  <UsingTask TaskName="ShowMeTheXAML.MSBuild.BuildXamlDictionaryTask"
-             AssemblyFile="$(ShowMeTheXAMLAssemblyDirectory)\ShowMeTheXAML.MSBuild.dll"/>
+    <PropertyGroup>
+        <ShowMeTheXAMLGeneratedFileName Condition="'$(ShowMeTheXAMLGeneratedFileName)' == '' Or $(ShowMeTheXAMLGeneratedFileName) == '*Undefined*'">ShowMeTheXaml_XamlDictionary.g.cs</ShowMeTheXAMLGeneratedFileName>
+        <ShowMeTheXAMLAssemblyPath Condition="$(ShowMeTheXAMLAssemblyDirectory) == '' Or $(ShowMeTheXAMLAssemblyDirectory) == '*Undefined*'">$(MSBuildThisFileDirectory)../../tools/</ShowMeTheXAMLAssemblyPath>
+        <ShowMeTheXAMLAssemblyDirectory Condition="$(MSBuildRuntimeType) == 'Core'">$(ShowMeTheXAMLAssemblyPath)netcore</ShowMeTheXAMLAssemblyDirectory>
+        <ShowMeTheXAMLAssemblyDirectory Condition="$(MSBuildRuntimeType) != 'Core'">$(ShowMeTheXAMLAssemblyPath)netframework</ShowMeTheXAMLAssemblyDirectory>
+    </PropertyGroup>
 
-  <Target Name="BuildXamlDictionary" BeforeTargets="BeforeCompile">
-    <BuildXamlDictionaryTask 
-      PageMarkup="@(Page)"
-      OutputPath="$(IntermediateOutputPath)"
-      GeneratedFileName="$(ShowMeTheXAMLGeneratedFileName)">
-      
-      <Output ItemName="Compile" TaskParameter="GeneratedCodeFiles" />
-    </BuildXamlDictionaryTask>
-  </Target>
+    <UsingTask TaskName="ShowMeTheXAML.MSBuild.BuildXamlDictionaryTask"
+               AssemblyFile="$(ShowMeTheXAMLAssemblyDirectory)\ShowMeTheXAML.MSBuild.dll"/>
+
+    <Target Name="BuildXamlDictionary" BeforeTargets="BeforeCompile">
+        <BuildXamlDictionaryTask
+          PageMarkup="@(Page)"
+          OutputPath="$(IntermediateOutputPath)"
+          GeneratedFileName="$(ShowMeTheXAMLGeneratedFileName)">
+
+            <Output ItemName="_BuildXamlDictionaryOutput" TaskParameter="GeneratedCodeFiles" />
+        </BuildXamlDictionaryTask>
+
+        <ItemGroup>
+            <Compile Include="@(_BuildXamlDictionaryOutput)" />
+        </ItemGroup>
+    </Target>
 </Project>

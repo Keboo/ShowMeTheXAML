@@ -1,12 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+        <TargetFrameworks>net472;netstandard2.0;xamarinios10;monoandroid90;monoandroid10.0;xamarinmac20</TargetFrameworks>
+        <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
     </PropertyGroup>
 
     <PropertyGroup>
+        <PackageId>ShowMeTheXAML.MSBuild</PackageId>
         <Title>ShowMeTheXAML.MSBuild</Title>
         <Description>ShowMeTheXAML library for providing a simple way to display a control and its corresponding XAML.</Description>
         <Copyright>Copyright 2020</Copyright>
@@ -18,38 +22,49 @@
         <IncludeBuildOutput>false</IncludeBuildOutput>
     </PropertyGroup>
 
-    <ItemGroup Condition="$(TargetFramework) == 'net472'">
+    <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
         <Reference Include="Microsoft.Build" />
         <Reference Include="Microsoft.Build.Framework" />
         <Reference Include="Microsoft.Build.Tasks.v4.0" />
         <Reference Include="Microsoft.Build.Utilities.v4.0" />
     </ItemGroup>
-    
-    <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
-        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.3.0" PrivateAssets="All" />
+
+    <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
+        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.7.0" PrivateAssets="All" />
+        <PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0" PrivateAssets="All" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml.Linq" />
     </ItemGroup>
 
+
+    <ItemGroup>
+        <_AllTargetFrameworks Include="$(TargetFrameworks)" />
+        <None Include="ShowMeTheXAML.MSBuild.targets" Pack="True" PackagePath="@(_AllTargetFrameworks->'build/%(Identity)/$(PackageId).targets')" />
+    </ItemGroup>
+    
     <PropertyGroup>
         <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeInPackage</TargetsForTfmSpecificContentInPackage>
     </PropertyGroup>
-
     <Target Name="IncludeInPackage">
         <PropertyGroup>
+            <EmptyFile>$(ProjectDir)$(IntermediateOutputPath)_._</EmptyFile>
             <TaskOutputDirectory Condition="$(TargetFramework) == 'net472'">netframework</TaskOutputDirectory>
             <TaskOutputDirectory Condition="$(TargetFramework) == 'netstandard2.0'">netcore</TaskOutputDirectory>
         </PropertyGroup>
-        <ItemGroup>
-            <TfmSpecificPackageFile Include="$(ProjectDir)\bin\$(Configuration)\$(TargetFramework)\*">
-                <PackagePath>build\$(TaskOutputDirectory)</PackagePath>
-            </TfmSpecificPackageFile>
 
-            <TfmSpecificPackageFile Include="$(ProjectDir)ShowMeTheXAML.MSBuild.targets" Condition="$(TargetFramework) == 'netstandard2.0'">
-                <PackagePath>build</PackagePath>
+        <WriteLinestoFile File="$(EmptyFile)" />
+        <ItemGroup>
+            <TfmSpecificPackageFile Include="$(ProjectDir)bin\$(Configuration)\$(TargetFramework)\*" Condition="$(TargetFramework) == 'net472' Or $(TargetFramework) == 'netstandard2.0'">
+                <PackagePath>tools\$(TaskOutputDirectory)</PackagePath>
+            </TfmSpecificPackageFile>
+            <TfmSpecificPackageFile Include="$(EmptyFile)">
+                <PackagePath>lib\$(TargetFramework)</PackagePath>
             </TfmSpecificPackageFile>
         </ItemGroup>
+        
     </Target>
 
     <Target Name="SetPackageDependency" AfterTargets="Pack">
-        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)" />
+        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add $(SolutionDir)$(PackageId)\bin\$(Configuration)\ --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)" />
     </Target>
 </Project>

@@ -1,0 +1,42 @@
+pool: 'Hosted Windows 2019 with VS2019'
+
+trigger:
+  batch: 'true'
+  branches:
+    include:
+    - master
+
+variables:
+- name: PackageOutputPath
+  value: '$(Build.ArtifactStagingDirectory)'
+- name: GeneratePackageOnBuild
+  value: true
+
+steps:
+- task: GitVersion@5
+  inputs:
+    runtime: 'core'
+    configFilePath: 'gitversion.yml'
+
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 5.0.2
+
+- task: NuGetCommand@2
+  inputs:
+    command: restore
+    restoreSolution: Uno.ShowMeTheXAML.sln
+    includeNuGetOrg: true
+
+- task: MSBuild@1
+  inputs:
+    solution: Uno.ShowMeTheXAML.sln
+    configuration: Release
+    platform: 'Any CPU'
+    msbuildArguments: /p:PackageVersion=$(GitVersion.NuGetVersion)
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    ArtifactName: Packages
+    PathtoPublish: $(PackageOutputPath)
+    publishLocation: Container
