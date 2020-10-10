@@ -32,7 +32,9 @@
     <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
         <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.7.0" PrivateAssets="All" />
         <PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0" PrivateAssets="All" />
-        <Reference Include="System.Xml" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='xamarinmac20'">
         <Reference Include="System.Xml.Linq" />
     </ItemGroup>
 
