@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ShowMeTheXAML" Version="2.0.0-ci51" />
-      <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0-ci51" />
+      <PackageReference Include="ShowMeTheXAML" Version="2.0.0-ci60" />
+      <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0-ci60" />
     </ItemGroup>
 </Project>

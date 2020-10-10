@@ -7,9 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf.Framework", "Wpf.Framew
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wpf.Core", "Wpf.Core\Wpf.Core.csproj", "{4A33FA13-94EC-48FC-B10E-07D8B68D7834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDIX.Test", "MDIX.Test\MDIX.Test.csproj", "{F837A1B4-049E-4283-A544-2F4124CDA18A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MDIX.Test", "MDIX.Test\MDIX.Test.csproj", "{F837A1B4-049E-4283-A544-2F4124CDA18A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTX.Test", "SMTX.Test\SMTX.Test.csproj", "{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VB.Framework", "VB.Framework\VB.Framework.vbproj", "{2F8F9DC1-E6E6-46B2-97E2-9E7DB566BAE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0D2ED79-ACF3-4D2F-8DBE-C51AF715F4BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F8F9DC1-E6E6-46B2-97E2-9E7DB566BAE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F8F9DC1-E6E6-46B2-97E2-9E7DB566BAE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F8F9DC1-E6E6-46B2-97E2-9E7DB566BAE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F8F9DC1-E6E6-46B2-97E2-9E7DB566BAE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
