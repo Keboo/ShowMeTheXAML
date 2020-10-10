@@ -207,7 +207,7 @@ namespace ShowMeTheXAML.MSBuild
 Imports System
 Imports ShowMeTheXAML
 
-Namespace ShowMeTheXAML
+Namespace Global.ShowMeTheXAML
     Public Module XamlDictionary
         Sub New()
             {string.Join(Environment.NewLine, pairs.Select(p => $"XamlResolver.[Set](\"{p.Key}\", \"{p.Data}\")"))}
