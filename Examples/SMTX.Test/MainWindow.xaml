@@ -8,11 +8,11 @@
         Title="MainWindow" Height="350" Width="525">
     <StackPanel Margin="10">
         
-        <showMeTheXaml:XamlDisplay Key="Button" VerticalAlignment="Center" Margin="0,20">
+        <showMeTheXaml:XamlDisplay UniqueKey="Button" VerticalAlignment="Center" Margin="0,20">
             <Button Content="Some Button" />
         </showMeTheXaml:XamlDisplay>
         
-        <showMeTheXaml:XamlDisplay VerticalAlignment="Center" Key="Grid">
+        <showMeTheXaml:XamlDisplay VerticalAlignment="Center" UniqueKey="Grid">
             <Grid>
                 <TextBlock Text="My Text" />
             </Grid>

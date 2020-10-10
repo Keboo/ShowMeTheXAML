@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
-    <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0-ci12" />
+    <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0-ci51" />
   </ItemGroup>
 
 </Project>
