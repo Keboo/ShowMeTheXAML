@@ -31,7 +31,7 @@ In App.xaml include the resource dictionary.
 
 ## Usage
 ```XAML
-<smtx:XamlDisplay Key="SomeUniqueString">
+<smtx:XamlDisplay UniqueKey="SomeUniqueString">
   <StackPanel>
     <Button Content="Some Content" />
     <TextBlock Text="Text" />
