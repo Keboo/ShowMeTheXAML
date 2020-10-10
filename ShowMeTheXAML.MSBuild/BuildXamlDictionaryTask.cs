@@ -38,6 +38,8 @@ namespace ShowMeTheXAML.MSBuild
         [Required]
         public string OutputPath { get; set; }
 
+        public string OutputLanguage { get; set; }
+
         public string GeneratedFileName { get; set; }
 
         private bool _success;
@@ -45,8 +47,11 @@ namespace ShowMeTheXAML.MSBuild
         {
             _success = true;
 
-            ITaskItem generated = BuildGeneratedFile(FromPageMarkup());
-
+            ITaskItem generated = OutputLanguage switch
+            {
+                "VisualBasic" => BuildGeneratedVisualBasicFile(FromPageMarkup()),
+                _ => BuildGeneratedCSharpFile(FromPageMarkup())
+            };
             GeneratedCodeFiles = new[] { generated };
 
             return _success;
@@ -192,12 +197,32 @@ namespace ShowMeTheXAML.MSBuild
             }
         }
 
-        private ITaskItem BuildGeneratedFile(IEnumerable<Xaml> pairs)
+        private ITaskItem BuildGeneratedVisualBasicFile(IEnumerable<Xaml> pairs)
         {
             string generatedFileName = !string.IsNullOrWhiteSpace(GeneratedFileName)
                 ? GeneratedFileName
-                : "ShowMeTheXaml_XamlDictionary.g.cs";
-            string generatedFilePath = Path.Combine(OutputPath, generatedFileName);
+                : "ShowMeTheXaml_XamlDictionary";
+            string generatedFilePath = Path.ChangeExtension(Path.Combine(OutputPath, generatedFileName), ".g.vb");
+            File.WriteAllText(generatedFilePath, $@"
+Imports System
+Imports ShowMeTheXAML
+
+Namespace Global.ShowMeTheXAML
+    Public Module XamlDictionary
+        Sub New()
+            {string.Join(Environment.NewLine, pairs.Select(p => $"XamlResolver.[Set](\"{p.Key}\", \"{p.Data}\")"))}
+        End Sub
+    End Module
+End Namespace");
+            return new TaskItem(generatedFilePath);
+        }
+
+        private ITaskItem BuildGeneratedCSharpFile(IEnumerable<Xaml> pairs)
+        {
+            string generatedFileName = !string.IsNullOrWhiteSpace(GeneratedFileName)
+                ? GeneratedFileName
+                : "ShowMeTheXaml_XamlDictionary";
+            string generatedFilePath = Path.ChangeExtension(Path.Combine(OutputPath, generatedFileName), ".g.cs");
             File.WriteAllText(generatedFilePath, $@"
 using System.Collections.Generic;
 
