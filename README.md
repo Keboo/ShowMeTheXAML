@@ -5,8 +5,6 @@ A WPF component making it easy to show the corresponding XAML for WPF custom sty
 [![NuGet Status](http://img.shields.io/nuget/v/ShowMeTheXAML.MSBuild.svg?style=flat&label=ShowMeTheXAML.MSBuild)](https://www.nuget.org/packages/ShowMeTheXAML.MSBuild/)
 [![NuGet Status](http://img.shields.io/nuget/v/ShowMeTheXAML.AvalonEdit.svg?style=flat&label=ShowMeTheXAML.AvalonEdit)](https://www.nuget.org/packages/ShowMeTheXAML.AvalonEdit/)
 
-[![AppVeyor](https://img.shields.io/appveyor/ci/Keboo/showmethexaml.svg)](https://ci.appveyor.com/project/Keboo/showmethexaml)
-
 ## Setup
 1. Install the MSBuild package. `PM> Install-Package ShowMeTheXAML.MSBuild` This will also install the `ShowMeTheXAML` package as well.
 2. Add the following code in your `App.xaml.cs`
