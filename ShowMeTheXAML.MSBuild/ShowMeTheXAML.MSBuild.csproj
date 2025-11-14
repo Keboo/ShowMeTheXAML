@@ -16,6 +16,7 @@
         <Copyright>Copyright 2025</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>icon.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
@@ -40,6 +41,7 @@
 
     <ItemGroup>
         <None Include="..\icon.png" Pack="true" PackagePath="\" />
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 
@@ -58,7 +60,7 @@
             <TaskOutputDirectory Condition="$(TargetFramework) == 'netstandard2.0'">netcore</TaskOutputDirectory>
         </PropertyGroup>
 
-        <WriteLinestoFile File="$(EmptyFile)" />
+        <WriteLinesToFile File="$(EmptyFile)" />
         <ItemGroup>
             <TfmSpecificPackageFile Include="$(ProjectDir)bin\$(Configuration)\$(TargetFramework)\*" Condition="$(TargetFramework) == 'net472' Or $(TargetFramework) == 'netstandard2.0'">
                 <PackagePath>tools\$(TaskOutputDirectory)</PackagePath>

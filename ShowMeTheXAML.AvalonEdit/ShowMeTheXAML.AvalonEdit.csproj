@@ -17,6 +17,7 @@
         <Copyright>Copyright 2025</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>icon.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
@@ -25,19 +26,9 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
     
-    <ItemGroup Condition="$(TargetFramework) == 'net472'">
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Xaml" />
-        <Reference Include="WindowsBase" />
-        <Reference Include="PresentationCore" />
-        <Reference Include="PresentationFramework" />
-    </ItemGroup>
     <ItemGroup>
-        <None Include="Properties\Settings.settings">
-            <Generator>SettingsSingleFileGenerator</Generator>
-            <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-        </None>
         <None Include="..\icon.png" Pack="true" PackagePath="\" />
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AvalonEdit" />
