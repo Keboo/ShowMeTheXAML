@@ -6,7 +6,7 @@
         <RootNamespace>ShowMeTheXAML.AvalonEdit</RootNamespace>
         <AssemblyName>ShowMeTheXAML.AvalonEdit</AssemblyName>
         <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
+        <DebugType>portable</DebugType>
         <UseWpf>True</UseWpf>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     </PropertyGroup>
@@ -17,10 +17,12 @@
         <Copyright>Copyright 2025</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>icon.png</PackageIcon>
-        <IncludeSymbols>True</IncludeSymbols>
+        <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
         <Authors>Kevin Bost</Authors>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
     
     <ItemGroup Condition="$(TargetFramework) == 'net472'">
@@ -39,6 +41,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AvalonEdit" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj" PrivateAssets="None" />

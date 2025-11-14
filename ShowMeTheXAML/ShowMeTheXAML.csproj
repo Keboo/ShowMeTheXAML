@@ -5,7 +5,7 @@
         <RootNamespace>ShowMeTheXAML</RootNamespace>
         <AssemblyName>ShowMeTheXAML</AssemblyName>
         <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
+        <DebugType>portable</DebugType>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <UseWpf>true</UseWpf>
     </PropertyGroup>
@@ -16,11 +16,17 @@
         <Copyright>Copyright 2025</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>icon.png</PackageIcon>
-        <IncludeSymbols>True</IncludeSymbols>
+        <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
         <Authors>Kevin Bost</Authors>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+    </ItemGroup>
 
     <ItemGroup>
         <None Include="..\icon.png" Pack="true" PackagePath="\" />
