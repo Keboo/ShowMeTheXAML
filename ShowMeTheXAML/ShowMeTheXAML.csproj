@@ -15,11 +15,16 @@
         <Description>Base classes for ShowMeTheXAML. This contains the basic control. If you are wanting to add this to your own project use ShowMeTheXAML.MSBuild.</Description>
         <Copyright>Copyright 2025</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>icon.png</PackageIcon>
         <IncludeSymbols>True</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
         <Authors>Kevin Bost</Authors>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\icon.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
         <Reference Include="System.Xml.Linq" />
