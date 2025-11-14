@@ -34,7 +34,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='xamarinmac20'">
-        <PackageReference Include="Uno.UI" Version="3.0.17" />
+        <PackageReference Include="Uno.UI" Version="5.6.99" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net472'">

@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
-        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.7.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="18.0.2" PrivateAssets="All" />
         <PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0" PrivateAssets="All" />
     </ItemGroup>
 
