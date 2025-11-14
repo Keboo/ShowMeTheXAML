@@ -27,23 +27,23 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     
     - name: Set Version
       run: |
         if ("${{ github.ref }}".startsWith("refs/tags/v")) {
           $tagVersion = "${{ github.ref }}".substring(11)
-          Write-Host "::set-env name=buildVersion::$tagVersion.${{ github.run_number }}"
-          Write-Host "::set-env name=nugetVersion::$tagVersion"
+          "buildVersion=$tagVersion.${{ github.run_number }}" >> $env:GITHUB_ENV
+          "nugetVersion=$tagVersion" >> $env:GITHUB_ENV
         } else {
-          Write-Host "::set-env name=buildVersion::${{ env.baseVersion }}.${{ github.run_number }}"
-          Write-Host "::set-env name=nugetVersion::${{ env.baseVersion }}-ci${{ github.run_number }}"
+          "buildVersion=${{ env.baseVersion }}.${{ github.run_number }}" >> $env:GITHUB_ENV
+          "nugetVersion=${{ env.baseVersion }}-ci${{ github.run_number }}" >> $env:GITHUB_ENV
         }
     
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: 3.1.x
         source-url: https://nuget.pkg.github.com/keboo/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -52,7 +52,7 @@ jobs:
       run: nuget restore ShowMeTheXAML.sln
 
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v2
 
     - name: Restore Local Tools
       run: dotnet tool restore
@@ -64,7 +64,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console" ShowMeTheXAML.sln
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: NuGet
         path: ${{ github.workspace }}\**\*.nupkg
