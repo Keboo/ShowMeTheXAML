@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
         <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
+        <DebugType>portable</DebugType>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <LangVersion>8.0</LangVersion>
@@ -16,11 +16,13 @@
         <Copyright>Copyright 2025</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>icon.png</PackageIcon>
-        <IncludeSymbols>True</IncludeSymbols>
+        <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
         <Authors>Kevin Bost</Authors>
         <IncludeBuildOutput>false</IncludeBuildOutput>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
@@ -32,6 +34,7 @@
 
     <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
         <PackageReference Include="Microsoft.Build.Tasks.Core" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
         <PackageReference Include="System.Reflection.TypeExtensions" PrivateAssets="All" />
     </ItemGroup>
 
