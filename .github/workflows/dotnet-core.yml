@@ -44,7 +44,6 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         global-json-file: global.json
-        include-prerelease: true
         source-url: https://nuget.pkg.github.com/keboo/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
