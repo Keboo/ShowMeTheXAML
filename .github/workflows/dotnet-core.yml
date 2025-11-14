@@ -61,7 +61,7 @@ jobs:
       run: dotnet pack ShowMeTheXAML.sln -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: NuGet
         path: ${{ github.workspace }}\**\*.nupkg
