@@ -1,11 +1,10 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net472;netstandard2.0;xamarinios10;monoandroid90;monoandroid10.0;xamarinmac20</TargetFrameworks>
-        <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);uap10.0.17763;</TargetFrameworks>
+        <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <LangVersion>8.0</LangVersion>
     </PropertyGroup>
@@ -14,8 +13,9 @@
         <PackageId>ShowMeTheXAML.MSBuild</PackageId>
         <Title>ShowMeTheXAML.MSBuild</Title>
         <Description>ShowMeTheXAML library for providing a simple way to display a control and its corresponding XAML.</Description>
-        <Copyright>Copyright 2020</Copyright>
+        <Copyright>Copyright 2025</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>icon.png</PackageIcon>
         <IncludeSymbols>True</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
@@ -31,12 +31,12 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' != 'net472'">
-        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.7.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="18.0.2" PrivateAssets="All" />
         <PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0" PrivateAssets="All" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='xamarinmac20'">
-        <Reference Include="System.Xml.Linq" />
+    <ItemGroup>
+        <None Include="..\icon.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 
@@ -65,9 +65,5 @@
             </TfmSpecificPackageFile>
         </ItemGroup>
         
-    </Target>
-
-    <Target Name="SetPackageDependency" AfterTargets="Pack">
-        <Exec Command="dotnet tool run nupkgwrench nuspec dependencies add $(SolutionDir)$(PackageId)\bin\$(Configuration)\ --dependency-id ShowMeTheXAML --dependency-version $(PackageVersion)" />
     </Target>
 </Project>
