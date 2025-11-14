@@ -49,16 +49,16 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     
     - name: Install dependencies
-      run: dotnet restore ShowMeTheXAML.sln
+      run: dotnet restore ShowMeTheXAML.slnx
 
     - name: Build
-      run: dotnet build ShowMeTheXAML.sln -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }}
+      run: dotnet build ShowMeTheXAML.slnx -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }}
     
     - name: Test
-      run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console" ShowMeTheXAML.sln
+      run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console" ShowMeTheXAML.slnx
 
     - name: Pack
-      run: dotnet pack ShowMeTheXAML.sln -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build
+      run: dotnet pack ShowMeTheXAML.slnx -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v5

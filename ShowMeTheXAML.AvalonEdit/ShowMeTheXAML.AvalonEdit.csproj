@@ -38,7 +38,7 @@
         <None Include="..\icon.png" Pack="true" PackagePath="\" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
+        <PackageReference Include="AvalonEdit" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj" PrivateAssets="None" />

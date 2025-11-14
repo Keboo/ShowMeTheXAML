@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".github/workflows/dotnet-core.yml" />
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="ShowMeTheXAML.AvalonEdit/ShowMeTheXAML.AvalonEdit.csproj" />
+  <Project Path="ShowMeTheXAML.MSBuild.Tests/ShowMeTheXAML.MSBuild.Tests.csproj" />
+  <Project Path="ShowMeTheXAML.MSBuild/ShowMeTheXAML.MSBuild.csproj" />
+  <Project Path="ShowMeTheXAML.Tests/ShowMeTheXAML.Tests.csproj" />
+  <Project Path="ShowMeTheXAML/ShowMeTheXAML.csproj" />
+</Solution>

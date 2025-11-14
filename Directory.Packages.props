@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <!-- Test packages -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="4.0.2" />
+    <PackageVersion Include="MSTest.TestFramework" Version="4.0.2" />
+    
+    <!-- Build packages -->
+    <PackageVersion Include="Microsoft.Build.Tasks.Core" Version="18.0.2" />
+    <PackageVersion Include="System.Reflection.TypeExtensions" Version="4.7.0" />
+    
+    <!-- UI packages -->
+    <PackageVersion Include="AvalonEdit" Version="6.3.1.120" />
+    <PackageVersion Include="MaterialDesignThemes" Version="3.2.0" />
+    
+    <!-- ShowMeTheXAML packages (for examples) -->
+    <PackageVersion Include="ShowMeTheXAML" Version="2.0.0" />
+    <PackageVersion Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
+  </ItemGroup>
+</Project>
