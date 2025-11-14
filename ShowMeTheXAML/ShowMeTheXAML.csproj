@@ -1,4 +1,4 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>net472;net8.0-windows</TargetFrameworks>
         <OutputType>library</OutputType>
@@ -24,13 +24,5 @@
 
     <ItemGroup>
         <None Include="..\icon.png" Pack="true" PackagePath="\" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Xaml" />
-        <Reference Include="WindowsBase" />
-        <Reference Include="PresentationCore" />
-        <Reference Include="PresentationFramework" />
     </ItemGroup>
 </Project>
