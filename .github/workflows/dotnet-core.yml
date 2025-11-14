@@ -51,9 +51,6 @@ jobs:
     - name: Install dependencies
       run: dotnet restore ShowMeTheXAML.sln
 
-    - name: Restore Local Tools
-      run: dotnet tool restore
-
     - name: Build
       run: dotnet build ShowMeTheXAML.sln -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }}
     

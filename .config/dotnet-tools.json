@@ -1,12 +1,5 @@
 {
   "version": 1,
   "isRoot": true,
-  "tools": {
-    "nupkgwrench": {
-      "version": "4.3.0",
-      "commands": [
-        "nupkgwrench"
-      ]
-    }
-  }
+  "tools": {}
 }
