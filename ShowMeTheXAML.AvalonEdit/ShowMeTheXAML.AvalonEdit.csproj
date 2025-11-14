@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>net472;net8.0-windows</TargetFrameworks>
         <OutputType>library</OutputType>
         <RootNamespace>ShowMeTheXAML.AvalonEdit</RootNamespace>
         <AssemblyName>ShowMeTheXAML.AvalonEdit</AssemblyName>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <UseWpf>True</UseWpf>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -36,7 +36,7 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
+        <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\ShowMeTheXAML\ShowMeTheXAML.csproj" />

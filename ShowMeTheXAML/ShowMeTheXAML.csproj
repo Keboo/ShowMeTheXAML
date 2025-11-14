@@ -1,41 +1,25 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
     <PropertyGroup>
-        <TargetFrameworks>net472;netcoreapp3.1;netstandard2.0;xamarinios10;MonoAndroid90;monoandroid10.0;xamarinmac20;</TargetFrameworks>
-        <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.17763</TargetFrameworks>
+        <TargetFrameworks>net472;net8.0-windows</TargetFrameworks>
         <OutputType>library</OutputType>
         <RootNamespace>ShowMeTheXAML</RootNamespace>
         <AssemblyName>ShowMeTheXAML</AssemblyName>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <UseWpf>true</UseWpf>
     </PropertyGroup>
 
     <PropertyGroup>
         <Title>ShowMeTheXAML</Title>
         <Description>Base classes for ShowMeTheXAML. This contains the basic control. If you are wanting to add this to your own project use ShowMeTheXAML.MSBuild.</Description>
-        <Copyright>Copyright 2020</Copyright>
+        <Copyright>Copyright 2025</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <IncludeSymbols>True</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryUrl>https://github.com/Keboo/ShowMeTheXAML</RepositoryUrl>
         <Authors>Kevin Bost</Authors>
     </PropertyGroup>
-
-    <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1' or '$(TargetFramework)'=='net472'">
-        <UseWpf>true</UseWpf>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='xamarinmac20' or '$(TargetFramework)'=='uap10.0.17763'">
-        <DefineConstants>$(DefineConstants);__UNO__</DefineConstants>
-    </PropertyGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='xamarinmac20'">
-        <Reference Include="System.Xml.Linq" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)'=='xamarinios10' or '$(TargetFramework)'=='MonoAndroid90' or '$(TargetFramework)'=='monoandroid10.0' or '$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='xamarinmac20'">
-        <PackageReference Include="Uno.UI" Version="5.6.99" />
-    </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
         <Reference Include="System.Xml.Linq" />

@@ -43,25 +43,25 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 8.0.x
         source-url: https://nuget.pkg.github.com/keboo/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     
     - name: Install dependencies
-      run: nuget restore ShowMeTheXAML.sln
-
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v2
+      run: dotnet restore ShowMeTheXAML.sln
 
     - name: Restore Local Tools
       run: dotnet tool restore
 
     - name: Build
-      run: msbuild -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} -p:configuration=${{ env.configuration }} ShowMeTheXAML.sln
+      run: dotnet build ShowMeTheXAML.sln -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }}
     
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }} --logger "console" ShowMeTheXAML.sln
+
+    - name: Pack
+      run: dotnet pack ShowMeTheXAML.sln -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
