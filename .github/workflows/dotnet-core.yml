@@ -25,6 +25,11 @@ jobs:
   build-main:
     runs-on: windows-latest
 
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+
     steps:
     - name: Checkout
       uses: actions/checkout@v7
@@ -66,9 +71,16 @@ jobs:
         name: NuGet
         path: ${{ github.workspace }}\**\*.nupkg
 
+    - name: NuGet Login
+      if: ${{ github.event_name != 'pull_request' }}
+      uses: NuGet/login@v1
+      id: nuget-login
+      with:
+        user: ${{ vars.NUGET_USER }}
+
     - name: Push NuGet
       if: ${{ github.event_name != 'pull_request' }}
-      run: dotnet nuget push ${{ github.workspace }}\${{ env.project }}*\bin\${{ env.configuration }}\${{ env.project }}*.${{ env.nugetVersion }}.nupkg --source https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+      run: dotnet nuget push ${{ github.workspace }}\${{ env.project }}*\bin\${{ env.configuration }}\${{ env.project }}*.${{ env.nugetVersion }}.nupkg --source https://api.nuget.org/v3/index.json -k ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --skip-duplicate
 
   automerge:
     needs: build-main
