@@ -7,7 +7,7 @@
     <!-- Test packages -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="MSTest.TestAdapter" Version="4.0.2" />
-    <PackageVersion Include="MSTest.TestFramework" Version="4.0.2" />
+    <PackageVersion Include="MSTest.TestFramework" Version="4.1.0" />
     
     <!-- Build packages -->
     <PackageVersion Include="Microsoft.Build.Tasks.Core" Version="18.0.2" />
