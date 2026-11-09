@@ -27,7 +27,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
     
     - name: Set Version
       run: |
@@ -41,7 +41,7 @@ jobs:
         }
     
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v5
+      uses: actions/setup-dotnet@v6
       with:
         global-json-file: global.json
         source-url: https://nuget.pkg.github.com/keboo/index.json
@@ -61,7 +61,7 @@ jobs:
       run: dotnet pack ShowMeTheXAML.slnx -p:Version=${{ env.buildVersion }} -p:PackageVersion=${{ env.nugetVersion }} --configuration ${{ env.configuration }} --no-build
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v7
       with:
         name: NuGet
         path: ${{ github.workspace }}\**\*.nupkg
@@ -80,4 +80,4 @@ jobs:
       contents: write
 
     steps:
-      - uses: fastify/github-action-merge-dependabot@v3.11.2
+      - uses: fastify/github-action-merge-dependabot@v3.15.0
