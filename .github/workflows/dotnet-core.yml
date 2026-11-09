@@ -71,6 +71,7 @@ jobs:
       run: dotnet nuget push ${{ github.workspace }}\${{ env.project }}*\bin\${{ env.configuration }}\${{ env.project }}*.${{ env.nugetVersion }}.nupkg --source https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
 
   automerge:
+    needs: build-main
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
 
